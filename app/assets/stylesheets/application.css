@@ -10,4 +10,25 @@
  *
  *= require_self
  *= require_tree .
+ *= bootstrap-responsive
+ *= bootstrap
+ *= bootstrap_and_overrides
  */
+
+#header_bar{
+	background-color: white;
+	margin:0px;
+}
+#login{
+	display:inline-block;
+	margin: 0px auto;
+	float: right;
+
+}
+
+#main_nav{
+	background-color: #004779;
+	left:0;
+	right:0;
+	margin:0px;
+}
