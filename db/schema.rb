@@ -11,7 +11,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131021190519) do
+ActiveRecord::Schema.define(version: 20131024143352) do
+
+  create_table "contributions", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.integer  "amount"
+    t.integer  "paid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "debts", force: true do |t|
+    t.integer  "owner_id"
+    t.integer  "indebted_id"
+    t.integer  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "debts", ["indebted_id"], name: "index_debts_on_indebted_id"
+  add_index "debts", ["owner_id", "indebted_id"], name: "index_debts_on_owner_id_and_indebted_id", unique: true
+  add_index "debts", ["owner_id"], name: "index_debts_on_owner_id"
+
+  create_table "events", force: true do |t|
+    t.integer  "creator_id"
+    t.integer  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
