@@ -18,30 +18,12 @@
 	</head>
 	
 	<body >
+
+		<!-- Navigation Bar -->
+    <%= render 'partials/navbar' %>
+
 		<div class="wrapper">
-				<div id= "custom-nav" class="navbar navbar-inverse navbar-fixed-top">
-					<a href="../" class="navbar-brand">FriendSplitter</a>
-					<div style="margin:0px;float:right">
-						<div id="login" class="navbar nav ">
-							<ul class="nav " style="float:right;margin:0px">
-								<% if user_signed_in? %>
-									<li class="nav  logging">
-								  		<%= link_to('Logout', destroy_user_session_path, :method => :delete) %>       
-								  	</li>
-								<% else %>
-								  	<li class="nav logging">
-								  		<%= link_to('Login', new_user_session_path)  %>  
-									</li>
-									<li class="divider"></li>
-									<li class="nav logging">
-				  						<%= link_to('Sign up', new_user_registration_path)  %>
-				  					</li>
-								<% end %>
-							</ul>
-						</div>
-					</div>
-										</div>
-				</div>
+
 			<div class="row" style="height:1000px;background-color:#adafb2">
 				<div class="col-mid-2" id="side-bar">
 				</div>
@@ -51,6 +33,8 @@
 					</div>
 				</div>
 			</div>
+			
 		</div>
+
 	</body>
 </html>
