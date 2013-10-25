@@ -16,4 +16,15 @@ class Event < ActiveRecord::Base
   validates :title, presence: true
   validates :description, presence: true
 
+
+  # Creates the debts associated with an event where
+  # the bill is divided evenly amongst all participants.
+  def createDebts()
+
+    # Find an optimal pairing between positive 
+    # and negative contributions such that the number of
+    # pairings are minimized. 
+  end
+
+
 end
