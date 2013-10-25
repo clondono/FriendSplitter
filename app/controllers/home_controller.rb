@@ -2,6 +2,15 @@ class HomeController < ApplicationController
 
 	
   def index
+    #Get user info if signed in
+    if user_signed_in?
+      p "here...................................."
+      @contributions = current_user.contributions
+      @debts = current_user.debts
+
+      # At some point, somewhere, need to make sure that debts tha aref ully paid get deleted!
+    end
+
 	end
 
 

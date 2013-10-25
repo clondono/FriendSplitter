@@ -10,12 +10,36 @@
           <p>
             <button class="btn btn-primary" type="button">Create New Event</button>
 
-            <button class="btn btn-primary" type="button">Manage Groups</button>
+            <!-- Not implementing in this step: <button class="btn btn-primary" type="button">Manage Groups</button> -->
           </p>
 
-          <h1>Pending Events</h1>
-
+          <!-- Not implementing yet: <h1>Pending Events</h1> -->
           <h1>Event History</h1>
+          <% if @contributions.any? %>
+
+            <table class="table">
+              <% @contributions.each do |contribution| %>
+                <tr>
+                    <td>
+
+                      <%= contribution.event.title %>
+
+                    </td>
+                    <td class="end-col">
+                      <!-- need link to event page/path -->
+
+                      <a href="#">Details</a>
+
+
+                    </td>
+                </tr>
+              <% end %>
+            </table>
+
+
+          <% else %>
+            <p class="center"> You don't seem to have participated in any events.</p>
+          <% end %>
 
 
         </div>

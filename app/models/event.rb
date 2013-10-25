@@ -13,5 +13,7 @@ class Event < ActiveRecord::Base
   has_many :contributions, dependent: :destroy
 
   validates :amount, presence: true
+  validates :title, presence: true
+  validates :description, presence: true
 
 end

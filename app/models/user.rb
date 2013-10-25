@@ -15,4 +15,7 @@ class User < ActiveRecord::Base
                                    dependent:   :destroy
   has_many :debtors, through: :owed_debts, source: :owner
 
+  # Associate a user with contributions
+  has_many :contributions, dependent: :destroy
+
 end
