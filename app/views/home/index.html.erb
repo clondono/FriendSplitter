@@ -1,17 +1,43 @@
 <div class="center">
-  
+
   <% if user_signed_in? %>
   	
+    <div class="row">
+      <div id="event-panel" class="span7">
 
-    <h1> Welcome, <%=current_user.first_name %></h1>
+        <div class="row">
+
+          <p>
+            <button class="btn btn-primary" type="button">Create New Event</button>
+
+            <button class="btn btn-primary" type="button">Manage Groups</button>
+          </p>
+
+          <h1>Pending Events</h1>
+
+          <h1>Event History</h1>
+
+
+        </div>
+
+
+
+      </div>
+
+      <div id="debts-panel" class="span5">
+        <ul class="nav nav-tabs">
+          <li><a href="#home" data-toggle="tab">Debts</a></li>
+          <li><a href="#profile" data-toggle="tab">Transactions</a></li>
+        </ul>
+      </div>
+
+    </div>
 
 
   <%else%>
 
     <h1>Welcome to FriendSplitter!</h1>
-
-    <p> Some blurb here about what we do... </p> 
-
+    <p> Some blurb here about what we do...and other stuff... </p> 
 
   <%end%>
 

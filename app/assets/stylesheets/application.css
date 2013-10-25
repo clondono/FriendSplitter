@@ -11,7 +11,7 @@
  *= require_self
  *= require_tree .
  */
- 
+
 
 #logo {
   float: left;
@@ -37,4 +37,15 @@ body {
 .center {
   text-align: center;
 }
+
+#event-panel, #debts-panel {
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  box-shadow: 10px 10px 5px #888888;
+  border: solid 1px #ddd;
+}
+
+
+
 
