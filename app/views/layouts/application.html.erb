@@ -21,20 +21,18 @@
 
 		<!-- Navigation Bar -->
     <%= render 'partials/navbar' %>
+		<div class="container">
+      <!-- Notes to be displayed on sucess/failure events -->
+      <div class="center">
+        <% flash.each do |key, value| %>
+          <div class="alert alert-<%= key %>"><%= value %></div>
+        <% end %>
+      </div>
 
-		<div class="wrapper">
+      <!-- Main content -->
+      <%= yield %>
 
-			<div class="row" style="height:1000px;background-color:#adafb2">
-				<div class="col-mid-2" id="side-bar">
-				</div>
-				<div class="col-mid-10" style="margin:0px;padding:0px;height:100%">
-					<div style="margin:0px;height:100%;width:100%">
-						<%= yield %>
-					</div>
-				</div>
-			</div>
-			
-		</div>
+    </div>
 
 	</body>
 </html>

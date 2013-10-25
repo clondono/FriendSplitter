@@ -10,30 +10,31 @@
  *
  *= require_self
  *= require_tree .
- *= bootstrap
  */
+ 
 
-#header_bar{
-	background-color: white;
-	margin:0px;
-}
-#login{
-	display:inline-block;
-	margin: 0px auto;
-	float: right;
-
-}
-
-#main_nav{
-	background-color: #004779;
-	left:0;
-	right:0;
-	margin:0px;
+#logo {
+  float: left;
+  margin-right: 10px;
+  font-size: 1.7em;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+  line-height: 1;
 }
 
-#custom-nav {
-    -webkit-box-shadow: 10px 10px 10px #787878;
-    -moz-box-shadow:    10px 10px 10px #787878;
-    box-shadow:         0px 10px 10px #787878;
-    z-index:999;
+#logo:hover {
+  color: #fff;
+  text-decoration: none;
 }
+
+body {
+  padding-top: 60px;
+}
+
+.center {
+  text-align: center;
+}
+

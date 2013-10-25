@@ -1,3 +1,20 @@
-<% if user_signed_in? %>
-	<h1> Welcome, <%=current_user.first_name %></h1>
-<%end%>
+<div class="center">
+  
+  <% if user_signed_in? %>
+  	
+
+    <h1> Welcome, <%=current_user.first_name %></h1>
+
+
+  <%else%>
+
+    <h1>Welcome to FriendSplitter!</h1>
+
+    <p> Some blurb here about what we do... </p> 
+
+
+  <%end%>
+
+
+
+</div>
