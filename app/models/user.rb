@@ -28,4 +28,8 @@ class User < ActiveRecord::Base
     contributions.create!(event_id: event.id, amount: amount, paid: paid)
   end
 
+  def owes?(other_user)
+    debts.find_by(indebted_id: other_user.id)
+  end
+
 end

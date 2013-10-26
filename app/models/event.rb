@@ -20,71 +20,107 @@ class Event < ActiveRecord::Base
   # Creates the debts associated with an event where
   # the bill is divided evenly amongst all participants.
   def createDebts()
-	owed = []
-	owes = []
+  	owed = []
+  	owes = []
 
-	self.contributions.each do |contribs|
-		balance = contribs.paid - contribs.amount
-		if balance > 0
-			owed.push([balance,contribs])
-		elsif balance <0
-			owes.push([balance,contribs])
-		end	
-	end
-	
-	# TODO: sort owed and owes from greatest to smallest
-	
-	owed.each do |posBal,posCont|
-		ower.each do |negBal, negCont|
-			
-			#if  ower can't pay off Owed's full balance
-			if postBal+negBal > 0
-				debt = negBal*-1 #Ower is indebted to Owed his full balance
-				ower.delete([negBal,negCont]) #TODO check this. removes this contribution from Owers
-				posBal=posBal+negBal #oweds new balance is old balance-Owed's debt
+  	self.contributions.each do |contribs|
+  	  balance = contribs.paid - contribs.amount
+  		if balance > 0
+  			owed.push([balance,contribs])
+  		elsif balance <0
+  			owes.push([balance,contribs])
+  		end	
+    end
 
-				#TODO CREATE THE DEBT OBJECT
+  	owed.sort{|x,y| x[0] <=>y[0]}.reverse!
+  	owes.sort{|x,y| x[0] <=>y[0]}.reverse!
 
-			#if after owed pays off all of oweds balance they still owe
-			elsif postBal+negBal <0
-				debt = posBal #Ower will pay off all that the Owed is owed
-				owed.delete([posBal,posCont]) #removes this contribution from Owed
-				negBal= negBal+posBal 
+  	
+  	owed.each do |posBal,posCont|
+  		owes.each do |negBal, negCont|
+  			
+  			#if  ower can't pay off Owed's full balance
+  			if posBal+negBal > 0
+  				debtAmount = negBal*-1 #Ower is indebted to Owed his full balance
+  				owes.delete([negBal,negCont]) #TODO check this. removes this contribution from Owers
+  				posBal=posBal+negBal #oweds new balance is old balance-Owed's debt
+          negCont.user.debts.create()
+          consolidateDebts(posCont,negCont,debtAmount)
 
-				#TODO CREATE THE DEBT OBJECT
+  			#if after owed pays off all of oweds balance they still owe
+  			elsif posBal+negBal <0
+  				debtAmount = posBal #Ower will pay off all that the Owed is owed
+  				owed.delete([posBal,posCont]) #removes this contribution from Owed
+  				negBal= negBal+posBal 
+          consolidateDebts(posCont,negCont,debtAmount)
 
-				break
-			#ower can pay off oweds full balance while finishing his own balance	
-			else
-				debt = posBal 
-				owed.delete([posBal,posCont]) #removes this contribution from Owed
-				ower.delete([negBal,negCont]) #TODO check this. removes this contribution from Owers
-
-				#TODO CREATE THE DEBT OBJECT
-
-				break
-			end
+  				break
+  			#ower can pay off oweds full balance while finishing his own balance	
+  			else
+  				debtAmount = posBal 
+  				owed.delete([posBal,posCont]) #removes this contribution from Owed
+  				owes.delete([negBal,negCont]) #TODO check this. removes this contribution from Owers
+          consolidateDebts(posCont,negCont,debtAmount)
 
 
-		end
-	end
+  				break
+  			end
+
+
+  		end
+  	end
 
   end
 
     # Find an optimal pairing between positive 
     # and negative contributions such that the number of
     # pairings are minimized. 
-  def createContributions(eventContributions)
-  	#this is for an event split. must be changed 
-  	#if allowing uneven splits of bills
+  def createEvenContributions(eventContributions)
   	@count = self.contributions.length
   	@evenSplit = self.amount/@count
   	
   	eventContributions.each do |contParams|
-  		puts("in createContributions")
-  		debugs("what im doing dawg")
   		contParams[:amount]=@evenSplit
-  		self.contributions.create(contParams)
+      contributor= User.find_by_email(contParams[:email])
+      contributor.setContribution!(self, contParams[:amount], contParams[:paid])
   	end
   end
+
+  def createContributions(eventContributions)
+    eventContributions.each do |contParams|
+      contributor= User.find_by_email(contParams[:email])
+      contributor.setContribution!(self, contParams[:amount], contParams[:paid])
+    end
+  end  
+
+
+  private 
+    def consolidateDebts(posCont, negCont, debtAmount)
+      ower=negCont.user
+      owed=posCont.user
+      # if the new ower already owes the owed
+      if ower.owes?(owed)
+        debt = ower.debts.find_by(indebted_id: owed.id)
+        debt.updateVal(debt.amount+debtAmount)
+
+      #If the new owere is owed money from the new owed      
+      elsif owed.owes?(ower)
+        debt = owed.debts.find_by(indebted_id: ower.id)
+        newDebt = debt.amount-debtAmount
+       
+        if newDebt > 0
+          debt.updateVal(newDebt)
+        elsif newDebt < 0
+          debt.destroy!
+          newDebt=newDebt*-1
+          ower.debts.create!(owner_id: ower.id, indebted_id: owed.id, amount: newDebt)
+        else
+          debt.destroy!
+        end
+
+      #if there is no debt between these users
+      else
+        ower.debts.create!(owner_id: ower.id, indebted_id: owed.id, amount: debtAmount)
+      end
+    end
 end

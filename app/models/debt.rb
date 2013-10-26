@@ -14,4 +14,9 @@ class Debt < ActiveRecord::Base
   validates :indebted_id, presence: true,
             :uniqueness => {:scope => :owner_id}
   validates :amount, presence: true
+
+  def updateVal(newVal)
+    update_attributes(amount: newVal)
+  end
+
 end
