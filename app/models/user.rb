@@ -18,4 +18,13 @@ class User < ActiveRecord::Base
   # Associate a user with contributions
   has_many :contributions, dependent: :destroy
 
+
+
+
+
+  # Creates a contribution for the user for the given params.
+  def setContribution!(event, amount, paid)
+    contributions.create!(event_id: event.id, amount: amount, paid: paid)
+  end
+
 end

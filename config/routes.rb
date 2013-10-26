@@ -6,8 +6,8 @@ Friendsplitter::Application.routes.draw do
   root 'home#index'
 
 
-  resources :debts, only: [:create, :destroy]
-  resources :contribution, only: [:create, :destroy]
+  resources :debts
+  resources :contribution
   resources :events
 
 
