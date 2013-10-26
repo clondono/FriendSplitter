@@ -15,3 +15,13 @@
 //= require turbolinks
 //= require_tree .
 //= bootstrap
+
+
+// Used to delete participants from a Event Creation Form
+// Adapated from: http://www.youtube.com/watch?v=TG5QIAIutPc
+function removeParticipant(link){
+  console.log("called")
+  console.log(link)
+  $(link).prev("input[type=hidden]").val("1")
+  $(link).closest(".participant").hide();
+}
