@@ -14,7 +14,8 @@ class User < ActiveRecord::Base
                                    class_name:  "Debt",
                                    dependent:   :destroy
   has_many :debtors, through: :owed_debts, source: :owner
-
+  has_many :events, foreign_key: "creator_id", dependent: :destroy
+  
   # Associate a user with contributions
   has_many :contributions, dependent: :destroy
 
