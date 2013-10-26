@@ -6,11 +6,13 @@
 
 class Event < ActiveRecord::Base
   # Makes sure every collection is associated with a user.
-  belongs_to :creator, :class_name => "User", :foreign_key => "creator_id"
-  validates :creator_id, presence: true
+  # belongs_to :creator, :class_name => "User", :foreign_key => "creator_id"
+  # validates :creator_id, presence: true
 
   # Associate an event with many contributions.
   has_many :contributions, dependent: :destroy
+
+  accepts_nested_attributes_for :contributions
 
   validates :amount, presence: true
   validates :title, presence: true
@@ -75,7 +77,7 @@ class Event < ActiveRecord::Base
     # and negative contributions such that the number of
     # pairings are minimized. 
   def createContributions(eventContributions)
-  	#this is for an event split. must be changed 
+  	#this is for an even split. must be changed 
   	#if allowing uneven splits of bills
   	@count = self.contributions.length
   	@evenSplit = self.amount/@count
