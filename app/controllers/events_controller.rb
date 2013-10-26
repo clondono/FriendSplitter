@@ -5,6 +5,7 @@ class EventsController < ApplicationController
  	def create
  		@event = current_user.events.create(params[:event])
       	@event.createContributions(params[:contributions])
+      	@event.createDebts()
       	respond_to do |format|
 	        if @event.save
 	          format.json { render json: @event, status: :created, location: @event }
