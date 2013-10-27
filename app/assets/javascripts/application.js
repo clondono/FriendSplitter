@@ -16,6 +16,7 @@
 //= require turbolinks
 //= require jquery_nested_form
 //= require_tree .
+//= home
 
 
 // Used to delete participants from a Event Creation Form

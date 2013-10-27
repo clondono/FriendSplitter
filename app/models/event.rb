@@ -73,6 +73,7 @@ class Event < ActiveRecord::Base
 
   end
 
+  # This is repetitive...Combine with createContribution -Angel
   def createEvenContributions(eventContributions)
   	@count = self.contributions.length
   	@evenSplit = self.amount/@count

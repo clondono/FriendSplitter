@@ -4,10 +4,11 @@ Friendsplitter::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   root 'home#index'
-  
   resources :debts
   resources :contribution
   resources :events
+
+  put 'debts/pay' => 'debts#pay'
 
 
   # Example of regular route:

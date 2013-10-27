@@ -1,7 +1,5 @@
-class EventsController < ApplicationController	
-	def index
-  	end
-
+class EventsController < ApplicationController
+  
   def new
     @event = Event.new
     2.times {@event.contributions.build}    
@@ -46,7 +44,10 @@ class EventsController < ApplicationController
       flash[:error] = "Please check the email addresses entered."
       redirect_to new_event_path
     end
+  end
 
+  def show
+      @event = Event.find_by_id(params[:id])
   end
 
 	def destroy
@@ -60,8 +61,8 @@ class EventsController < ApplicationController
   private
     # Strong parameters for security (rails way)
     def event_params
-      params.require(:event).permit(:title, 
-        :description, :amount, contributions_attributes:[:email,:amount,:paid])
+        params.require(:event).permit(:title, 
+                                      :description, :amount, contributions_attributes:[:email,:amount,:paid])
     end
 
 end
