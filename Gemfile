@@ -20,6 +20,8 @@ gem 'coffee-rails', '~> 4.0.0'
 # Use Twitter Bootstrap
  gem 'bootstrap-sass', '2.3.2.0'
 
+ gem "nested_form"
+
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 #gem 'therubyracer', platforms: :ruby
 

@@ -89,9 +89,9 @@ class Event < ActiveRecord::Base
   end
 
   def createContributions(eventContributions)
-    eventContributions.each do |contParams|
-      contributor= User.find_by_email(contParams[:email])
-      contributor.setContribution!(self, contParams[:amount], contParams[:paid])
+    eventContributions[:contributions_attributes].each do |contribution|
+      contributor = User.find_by_email(contribution[1]["email"])
+      contributor.setContribution!(self, contribution[1]["amount"], contribution[1]["paid"])
     end
   end  
 
