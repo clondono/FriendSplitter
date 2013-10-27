@@ -7,7 +7,7 @@ class HomeController < ApplicationController
       p "here...................................."
       @contributions = current_user.contributions
       @debts = current_user.debts
-
+      @owed_debts = current_user.owed_debts
       # At some point, somewhere, need to make sure that debts tha aref ully paid get deleted!
     end
 

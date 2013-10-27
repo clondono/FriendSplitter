@@ -46,14 +46,55 @@
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#tab1" data-toggle="tab">Debts</a></li>
 
-                        <li><a href="#tab2" data-toggle="tab">Transactions</a></li>
+                        <li><a href="#tab2" data-toggle="tab">Owed Debts</a></li>
                     </ul>
                     <div class="tab-content rightpanel">
                         <div class="tab-pane active rightpanel" id="tab1">
-                            <p>I'm in Section 1.</p>
+                            <% if @debts.any? %>
+                              <table class="table">
+                                <% @debts.each do |debt| %>
+                                  <tr>
+                                      <td>
+                                        <%= debt.indebted.first_name %>
+                                      </td>
+                                      <td>
+                                        <%= debt.amount %>
+                                      </td>
+
+                                      <td class="end-col">
+                                        <!-- need link to event page/path -->
+                                        <a href="#">PAY</a>
+                                      </td>
+                                  </tr>
+                                <% end %>
+                              </table>
+                            <% else %>
+                              <p class="center"> You don't seem to have any debts!</p>
+                            <% end %>
                         </div>
                         <div class="tab-pane rightpanel" id="tab2">
-                            <p>Howdy, I'm in Section 2.</p>
+                            <% if @owed_debts.any? %>
+                              <table class="table">
+                                <% @owed_debts.each do |owed_debt| %>
+                                  <tr>
+                                      <td>
+                                        <%= owed_debt.owner.email %>
+                                      </td>
+                                      <td>
+                                        <%= owed_debt.amount %>
+                                      </td>
+
+                                      <td class="end-col">
+                                        <!-- need link to event page/path -->
+                                        <a href="#">PAY</a>
+                                      </td>
+                                      </td>
+                                  </tr>
+                                <% end %>
+                              </table>
+                            <% else %>
+                              <p class="center"> You don't seem to be owed any money!</p>
+                            <% end %>
                         </div>
                     </div>
                 </div>
