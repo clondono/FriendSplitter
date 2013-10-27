@@ -21,7 +21,10 @@ class Event < ActiveRecord::Base
 
   # Creates the debts associated with an event where
   # the bill is divided evenly amongst all participants.
-  def createDebts()
+  # TODO: Find an optimal pairing between positive 
+  # and negative contributions such that the number of
+  # pairings are minimized. 
+  def createDebts
   	owed = []
   	owes = []
 
@@ -63,20 +66,13 @@ class Event < ActiveRecord::Base
   				owed.delete([posBal,posCont]) #removes this contribution from Owed
   				owes.delete([negBal,negCont]) #TODO check this. removes this contribution from Owers
           consolidateDebts(posCont,negCont,debtAmount)
-
-
   				break
   			end
-
-
   		end
   	end
 
   end
 
-    # Find an optimal pairing between positive 
-    # and negative contributions such that the number of
-    # pairings are minimized. 
   def createEvenContributions(eventContributions)
   	@count = self.contributions.length
   	@evenSplit = self.amount/@count

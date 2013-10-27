@@ -24,8 +24,9 @@ class EventsController < ApplicationController
 
     # Save event and redirect appropriately.
     if @event.save
-      # Create contributions that belong to the event.
+      # Create contributions and debts.
       @event.createContributions(contributionsInfo)
+      @event.createDebts
 
       flash[:success] = "Event Created"
       redirect_to root_url
