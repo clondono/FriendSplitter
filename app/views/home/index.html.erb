@@ -12,17 +12,17 @@
 
                     <!-- Not implementing yet: <h1>Pending Events</h1> -->
                     <h2>Event History</h2>
-                    <% if @contributions.any? %>
+                    <% if @participationInEvent.any? %>
 
                         <table class="table">
-                            <% @contributions.each do |contribution| %>
+                            <% @participationInEvent.each do |event| %>
                                 <tr>
                                     <td>
-                                        <%= contribution.event.title %>
+                                        <%= event.title %>
                                     </td>
                                     <td class="end-col">
                                         <!-- need link to event page/path -->
-                                        <a href="#">Details</a>
+                                        <%= link_to "Event Details", event %>
                                     </td>
                                 </tr>
                             <% end %>
