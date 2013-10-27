@@ -5,10 +5,11 @@ Friendsplitter::Application.routes.draw do
 
   root 'home#index'
 
-
   resources :debts
   resources :contribution
   resources :events
+
+  put 'debts/pay' => 'debts#pay'
 
 
   # Example of regular route:

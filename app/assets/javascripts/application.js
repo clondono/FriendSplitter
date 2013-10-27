@@ -15,6 +15,7 @@
 //= require bootstrap
 //= require turbolinks
 //= require_tree .
+//= home
 
 
 // Used to delete participants from a Event Creation Form
