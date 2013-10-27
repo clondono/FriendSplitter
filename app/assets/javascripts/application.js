@@ -12,9 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap
 //= require turbolinks
 //= require_tree .
-//= bootstrap
 
 
 // Used to delete participants from a Event Creation Form

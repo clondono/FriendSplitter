@@ -1,69 +1,73 @@
-<div class="center">
+<% if user_signed_in? %>
 
-  <% if user_signed_in? %>
-  	
-    <div class="row">
-      <div id="event-panel" class="span7">
+    <div class="row-fluid">
+        <div class="span7 offset1">
 
-        <div class="row">
+            <div id="event-panel" class="center">
+                <div class="row">
 
-          <p>
+                    <p>
+                    <%= link_to "Create New Event", new_event_path, class: "btn btn-medium btn-inverse" %> 
+                    
+                    <!-- Not implementing in this step: <button class="btn btn-primary" type="button">Manage Groups</button> -->
+                    </p>
+                    <p> <a href="#">sample link</a></p>
+                    <p class="test"> test</p>
+                    <button class="btn">Hi</button>
 
-            <%= link_to "Create New Event", new_event_path, class: "btn btn-medium btn-inverse" %> 
+                    <!-- Not implementing yet: <h1>Pending Events</h1> -->
+                    <h1>Event History</h1>
+                    <% if @contributions.any? %>
 
-            <!-- Not implementing in this step: <button class="btn btn-primary" type="button">Manage Groups</button> -->
-          </p>
+                        <table class="table">
+                            <% @contributions.each do |contribution| %>
+                                <tr>
+                                    <td>
 
-          <!-- Not implementing yet: <h1>Pending Events</h1> -->
-          <h1>Event History</h1>
-          <% if @contributions.any? %>
+                                        <%= contribution.event.title %>
 
-            <table class="table">
-              <% @contributions.each do |contribution| %>
-                <tr>
-                    <td>
+                                    </td>
+                                    <td class="end-col">
+                                        <!-- need link to event page/path -->
 
-                      <%= contribution.event.title %>
-
-                    </td>
-                    <td class="end-col">
-                      <!-- need link to event page/path -->
-
-                      <a href="#">Details</a>
-
-
-                    </td>
-                </tr>
-              <% end %>
-            </table>
+                                        <a href="#">Details</a>
 
 
-          <% else %>
-            <p class="center"> You don't seem to have participated in any events.</p>
-          <% end %>
+                                    </td>
+                                </tr>
+                            <% end %>
+                        </table>
 
 
+                    <% else %>
+                        <p class="center"> You don't seem to have participated in any events.</p>
+                    <% end %>
+
+
+                </div>
+
+            </div>
         </div>
 
-      </div>
 
-      <div id="debts-panel" class="span5">
-        <ul class="nav nav-tabs">
-          <li><a href="#home" data-toggle="tab">Debts</a></li>
-          <li><a href="#profile" data-toggle="tab">Transactions</a></li>
-        </ul>
-      </div>
+        <div class="span3">
+            <div id="debts-panel" class="center">
+                <ul class="nav nav-tabs">
+                    <li><a href="#home" data-toggle="tab">Debts</a></li>
+                    <li><a href="#profile" data-toggle="tab">Transactions</a></li>
+                </ul>
+            </div>
+        </div>
 
     </div>
 
 
-  <%else%>
+<%else%>
 
     <h1>Welcome to FriendSplitter!</h1>
     <p> Some blurb here about what we do...and other stuff... </p> 
 
-  <%end%>
+<%end%>
 
 
 
-</div>

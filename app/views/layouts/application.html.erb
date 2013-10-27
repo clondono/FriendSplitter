@@ -1,38 +1,42 @@
 <!DOCTYPE html>
 <html>
-	<head>
-  		<title>Friendsplitter</title>
-  		<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  		<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  		<%= csrf_meta_tags %>
-		<%= csrf_meta_tags %>
-		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-	 	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-	 	<!--used in order to pass user authentication in AJAX  calls-->
-	 	<script> $(document).ajaxSend(function(e, xhr, options) {
-  			var token = $("meta[name='csrf-token']").attr("content");
-  			xhr.setRequestHeader("X-CSRF-Token", token);
-			});
-	 	</script>
-	</head>
-	
-	<body >
+    <head>
+        <title>Friendsplitter</title>
+        <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+        <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+        <%= csrf_meta_tags %>
+        <%= csrf_meta_tags %>
+        <!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        -->
 
-		<!-- Navigation Bar -->
+        <!--used in order to pass user authentication in AJAX  calls-->
+        <script> $(document).ajaxSend(function(e, xhr, options) {
+            var token = $("meta[name='csrf-token']").attr("content");
+            xhr.setRequestHeader("X-CSRF-Token", token);
+        });
+    </script>
+</head>
+
+<body >
+
+    <!-- Navigation Bar -->
     <%= render 'partials/navbar' %>
-		<div class="container">
-      <!-- Notes to be displayed on sucess/failure events -->
-      <div class="center">
-        <% flash.each do |key, value| %>
-          <div class="alert alert-<%= key %>"><%= value %></div>
-        <% end %>
-      </div>
 
-      <!-- Main content -->
-      <%= yield %>
+    <div class="container-fluid">
+
+        <!-- Notes to be displayed on sucess/failure events -->
+        <div class="center">
+            <% flash.each do |key, value| %>
+                <div class="alert alert-<%= key %>"><%= value %></div>
+            <% end %>
+        </div>
+
+        <!-- Main content -->
+        <%= yield %>
 
     </div>
 
-	</body>
+</body>
 </html>
