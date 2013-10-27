@@ -40,9 +40,13 @@ body {
 
 
 #event-panel, #debts-panel {
-  border: solid 1px #ddd;
+  padding: 20px;
+  border-radius:20px;
+  background-color: #fff;
 }
 
+#event-panel, .rightpanel {
+  }
 
 
 

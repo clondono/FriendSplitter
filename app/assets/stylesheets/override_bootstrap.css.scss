@@ -1,0 +1,52 @@
+$black:                 #000 !default;
+$grayDarker:            #222 !default;
+$grayDark:              #333 !default;
+$gray:                  #555 !default;
+$grayLight:             #999 !default;
+$grayLighter:           #eee !default;
+$white:                 #fff !default;
+
+$bodyBackground: #EFF5EB;
+
+$linkColor: #E68200;
+
+$navbarBackground:  #A5C493;
+$navbarBackgroundHighlight:  $navbarBackground;
+
+$btnWarningBackground:              #00727A;
+$btnWarningBackgroundHighlight:     #00727A;
+
+
+
+@import "bootstrap";
+
+h2 {
+    color: #614E19;
+    font-family: 'Karla', sans-serif;    
+    //font-family: 'Bubbler One', sans-serif;
+}
+
+.blurb{
+    font-family: 'Bubbler One', sans-serif;
+    font-size: 1.5em;
+    color: #545454;
+}    
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus,
+.dropdown-submenu:hover > a,
+.dropdown-submenu:focus > a {
+  text-decoration: none;
+  color: #333333;
+  background-color: #F7F7F7;
+  background-image: none; 
+  filter: none; }
+
+.nav-tabs > .active > a,
+.nav-tabs > .active > a:hover,
+.nav-tabs > .active > a:focus {
+  background-color: $white; }
+
+label {
+    //display:inline-block;
+}

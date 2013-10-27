@@ -1,26 +1,43 @@
-<h2>Sign up</h2>
-
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
-
-  <div><%= f.label :first_name %><br />
-  <%= f.text_field :first_name %></div>
+<div class="row">
+    <div class="span10 offset1">
+        <div class="welcomeContainer">
+            <div class="welcomeContent">
+                <h2>Sign up</h2>
 
 
-  <div><%= f.label :last_name %><br />
-  <%= f.text_field :last_name %></div>
+                <div class="row">
+                    <div class="span4 offset3">
+                        <div class="form">
+                            <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+                                <%= devise_error_messages! %>
+
+                                <div><%= f.label :email %>
+                                    <%= f.email_field :email, class:"inputWrap", :autofocus => true %></div>
+
+                                <div><%= f.label :first_name %>
+                                    <%= f.text_field :first_name, class:"inputWrap"%></div>
 
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+                                <div><%= f.label :last_name %>
+                                    <%= f.text_field :last_name, class:"inputWrap"%></div>
 
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
 
-  <div><%= f.submit "Sign up" %></div>
-<% end %>
+                                <div><%= f.label :password %>
+                                    <%= f.password_field :password, class:"inputWrap" %></div>
 
-<%= render "devise/shared/links" %>
+                                <div><%= f.label :password_confirmation %>
+                                    <%= f.password_field :password_confirmation, class:"inputWrap" %></div>
+
+                                <div><%= f.submit "Sign up", class:"btn btn-warning pull-right" %></div>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="links">
+                    <%= render "devise/shared/links" %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,3 +1,68 @@
 // Place all the styles related to the Home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#graphic {
+    content: url(/assets/welcome.png);
+    height: 320px;
+    display:inline-block;
+}
+
+.welcomeContainer{
+    border-radius:25px;
+    background-color: #fff;
+}
+
+.welcomeContent{
+    text-align:center;
+    padding:20px;
+}
+
+.welcomeBtn{
+    display:inline-block;
+    background-color:#F0A800;
+    padding:20px;
+    margin:10px;
+    color: #fff;
+    font-weight:700;
+    border-radius:10px;
+    border: 0px;
+}
+
+.welcomeBtn:hover{
+    color: #fff;
+    background-color:#FFDD00;
+    text-decoration:none;
+}
+
+.inputWrap {
+    width: 100%;
+}
+
+.form{
+    margin: 30px;
+    text-align:left;
+}
+
+.links{
+    margin-top: 40px;
+}
+
+
+#createEventBtn{
+    content: url(/assets/createnewevent.png);
+    height: 100px;
+    display:inline-block;
+}
+
+#createEventBtn:hover {
+    -webkit-transform: rotate(10deg);
+    -moz-transform: rotate(10deg);
+    -o-transform: rotate(10deg);
+    -ms-transform: rotate(10deg);
+    transform: rotate(10deg);
+}
+
+.createEventBox {
+    padding:0px 20px;
+}

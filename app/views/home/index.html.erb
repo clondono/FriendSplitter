@@ -1,38 +1,28 @@
 <% if user_signed_in? %>
 
-    <div class="row-fluid">
-        <div class="span7 offset1">
+    <div class="row">
+        <div class="span8">
 
             <div id="event-panel" class="center">
                 <div class="row">
 
-                    <p>
-                    <%= link_to "Create New Event", new_event_path, class: "btn btn-medium btn-inverse" %> 
-                    
+                    <%= link_to "Create New Event", new_event_path, id: "createEventBtn" %> 
+
                     <!-- Not implementing in this step: <button class="btn btn-primary" type="button">Manage Groups</button> -->
-                    </p>
-                    <p> <a href="#">sample link</a></p>
-                    <p class="test"> test</p>
-                    <button class="btn">Hi</button>
 
                     <!-- Not implementing yet: <h1>Pending Events</h1> -->
-                    <h1>Event History</h1>
+                    <h2>Event History</h2>
                     <% if @contributions.any? %>
 
                         <table class="table">
                             <% @contributions.each do |contribution| %>
                                 <tr>
                                     <td>
-
                                         <%= contribution.event.title %>
-
                                     </td>
                                     <td class="end-col">
                                         <!-- need link to event page/path -->
-
                                         <a href="#">Details</a>
-
-
                                     </td>
                                 </tr>
                             <% end %>
@@ -50,12 +40,23 @@
         </div>
 
 
-        <div class="span3">
+        <div class="span4">
             <div id="debts-panel" class="center">
-                <ul class="nav nav-tabs">
-                    <li><a href="#home" data-toggle="tab">Debts</a></li>
-                    <li><a href="#profile" data-toggle="tab">Transactions</a></li>
-                </ul>
+                <div class="tabbable">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab1" data-toggle="tab">Debts</a></li>
+
+                        <li><a href="#tab2" data-toggle="tab">Transactions</a></li>
+                    </ul>
+                    <div class="tab-content rightpanel">
+                        <div class="tab-pane active rightpanel" id="tab1">
+                            <p>I'm in Section 1.</p>
+                        </div>
+                        <div class="tab-pane rightpanel" id="tab2">
+                            <p>Howdy, I'm in Section 2.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -64,8 +65,7 @@
 
 <%else%>
 
-    <h1>Welcome to FriendSplitter!</h1>
-    <p> Some blurb here about what we do...and other stuff... </p> 
+    <%= render "notloggedin" %>
 
 <%end%>
 

@@ -1,50 +1,50 @@
-<div class="center">
+<div class="row">
+    <div class="span8 offset2">
 
-  <%= form_for(@event) do |f| %>
-  <%= render 'partials/error_messages', object: f.object %>
-
-  <%= f.label :title %>
-  <%= f.text_field :title, placeholder: "Event Title", :autofocus => true %>
-
-  <%= f.label :description %>
-  <%= f.text_area :description, placeholder: "What was the event?", :rows => 15 %>
-
-  <%= f.label :amount %>
-  <%= f.number_field :amount, min: 0, placeholder: "Total Amount" %>
-
-  <br> <br> <br> <br>
-
-  <p> Participants: <p>
-
-  <%= f.fields_for :contributions do |builder| %>  
-    <%= render 'partials/participants', :f => builder %>
-  <%end%>
+        <div class="welcomeContainer">
 
 
+            <div class="welcomeContent">
+                <h2>Create an Event</h2>
+            </div>
 
+            <div class="createEventBox">
 
+                <div class="row">
+                    <div class="span5 offset1">
+                <%= form_for(@event) do |f| %>
+                    <%= render 'partials/error_messages', object: f.object %>
 
+                    <%= f.label :title %>
+                    <%= f.text_field :title, class:"inputWrap", placeholder: "Event Title", :autofocus => true %>
 
-  <div class="center">
-    <%= f.submit "Create Event", class: "btn btn-large btn-inverse" %>
-  </div>
-  
-  <% end %>
+                    <%= f.label :description %>
+                    <%= f.text_area :description, class:"inputWrap", placeholder: "What was the event?", :rows => 15 %>
 
+                    <%= f.label :amount %>
+                    <%= f.number_field :amount, class:"inputWrap", min: 0, placeholder: "Total Amount" %>
+
+                    <br> <br> <br> <br>
+
+                    <p> Participants: <p>
+
+                    <%= f.fields_for :contributions do |builder| %>  
+                        <%= render 'partials/participants', :f => builder %>
+                    <%end%>
+                    <%= number_field_tag :userOwes, min: 0, placeholder: "Owes" %>
+                    <%= number_field_tag :userPaid, min: 0, placeholder: "Paid" %>
+
+                    <div class="center">
+                        <%= f.submit "Create Event", class: "btn btn-large btn-inverse" %>
+                    </div>
+                <% end %>
+
+                </div>
+            </div>
+
+                <div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-
-
-
-
-    <br>
-    <br>
-    <br>
-
-  <div>
-    <span> (You) </span>
-
-    <%= number_field_tag :userOwes, min: 0, placeholder: "Owes" %>
-    <%= number_field_tag :userPaid, min: 0, placeholder: "Paid" %>
-    
-  </div>
