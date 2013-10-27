@@ -4,49 +4,39 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
-    3.times {@event.contributions.build}    
+    1.times {@event.contributions.build}    
   end
   
  	def create
+    # Extract contribution attributes from params
+    # and rebuild the params hash.
+    contributionsInfo = event_params.slice(:contributions_attributes)
+    title = event_params.slice(:title)
+    desc = event_params.slice(:description)
+    amount = event_params.slice(:amount)
+    newParams = title.merge(desc).merge(amount)
+    
     # Create the event.
-    @event = Event.new(event_params)
+    @event = Event.new(newParams)
 
-    # Create contributions that belong to the event.
-    @event.createContributions()
+    #TODO check if valid contribution amounts.
+    # Create method in model and call it...
 
     # Save event and redirect appropriately.
     if @event.save
+      # Create contributions and debts.
+      @event.createContributions(contributionsInfo)
+      @event.createDebts
+
       flash[:success] = "Event Created"
       redirect_to root_url
     else
       render 'new'
     end
 
- 		# @event = current_user.events.create(params[:event])
-   #    	@event.createContributions(params[:contributions])
-   #    	@event.createDebts()
-   #    	respond_to do |format|
-	  #       if @event.save
-	  #         format.json { render json: @event, status: :created, location: @event }
-
-	  #       else
-	  #         format.html { render action: "new" }
-	  #         format.json { render json: @event.errors, status: :unprocessable_entity }
-	  #         format.js { render json: @event.errors, status: :unprocessable_entity }
-	  #   	end
-   #    	end
   end
 
 	def destroy
-    @event = current_user.events.find(params[:id])
-    @event.destroy
-
-    respond_to do |format|
-    	#TODO fix
-      format.html { redirect_to posts_url }
-      format.json { head :no_content }
-      format.js { head :no_content}
-    end
 	end
 
 	def update
@@ -58,7 +48,8 @@ class EventsController < ApplicationController
   private
     # Strong parameters for security (rails way)
     def event_params
-      params.require(:event).permit(:title, :description, :amount)
+      params.require(:event).permit(:title, 
+        :description, :amount, contributions_attributes:[:email,:amount,:paid])
     end
 
 end
