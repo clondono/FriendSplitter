@@ -11,6 +11,7 @@ class Event < ActiveRecord::Base
 
   # Associate an event with many contributions.
   has_many :contributions, dependent: :destroy
+  has_many :participants, through: :contributions, source: :user
 
   accepts_nested_attributes_for :contributions
 

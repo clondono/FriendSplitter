@@ -23,19 +23,23 @@
                             <%= f.label :amount %>
                             <%= f.number_field :amount, class:"inputWrap", min: 0, placeholder: "Total Amount (integer)" %>
 
-                            <p>Participants:</p>
+                            <br><br>
+
+                            <p>Participants (remember to include yourself):</p>
 
                             <%= f.fields_for :contributions do |p| %>
-                                <%= p.email_field :email, placeholder: "Email"  %>
+                                <div class="participDiv">
+                                    <%= p.email_field :email, placeholder: "Email"  %>
 
-                                <div class="controls controls-row">
-                                    <%= p.number_field :amount, class: "span2", min: 0, placeholder: "$ Owes (integer)" %>
-                                    <%= p.number_field :paid, class: "span2", min: 0, placeholder: "$ Paid (integer)" %>
-                                <%= p.link_to_remove "Remove", class: "pull-right" %>
+                                    <div class="controls controls-row">
+                                        <%= p.number_field :amount, class: "span2", min: 0, placeholder: "$ Owes (integer)" %>
+                                        <%= p.number_field :paid, class: "span2", min: 0, placeholder: "$ Paid (integer)" %>
+                                        <%= p.link_to_remove "Remove", class: "pull-right" %>
+                                    </div>
                                 </div>
                             <% end %>
 
-                            <p><%= f.link_to_add "add another participant", :contributions , class: "btn btn-warning btn-mini"%></p>
+                            <p><%= f.link_to_add "add another", :contributions , class:"smallGreyBtn"%></p>
 
                             <div class="center">
                                 <%= f.submit "Create Event", class: "welcomeBtn" %>

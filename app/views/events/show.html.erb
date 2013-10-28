@@ -1,21 +1,41 @@
 <div class="row">
-  <div class="span8 offset2">
-    <div class="welcomeContainer">
+    <div class="span8 offset2">
+        <div class="welcomeContainer">
 
-      <div class="welcomeContent">
-        <h2>Event Details</h2>
-      </div>
+            <div class="eventTitleDiv">
+                <h2><%= @event.title %></h2>
+            </div>
 
-      <div class="createEventBox">
-        <div class="row">
-          <div class="span5 offset1">
+            <div class="row">
+                <div class="span6 offset1">
+
+                    <hr />
+
+                    <div class="eventDetailDiv">
+                        <div>
+                            <p class="descr">Description</p>
+                            <%= @event.description %>
+                        </div>
+                        <div>
+                            <strong>Total bill: </strong> <%= @event.amount %>
+                        </div>
+
+                        <p class="descr">Participants</p>
+                        <% @contributions.each do |f|%>
+                            <div>
+                                <%= f.user.email %> paid $<%= f.paid %>
+                            </div>
+                        <% end %>
+                    </div>
 
 
-          </div>
+                </div>
+            </div>
+
+            <div class="links">
+                <%= link_to "back", root_url %>
+            </div>
         </div>
-      </div>
-
     </div>
-  </div>
 </div>
 

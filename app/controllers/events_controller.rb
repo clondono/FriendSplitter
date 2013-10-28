@@ -48,6 +48,9 @@ class EventsController < ApplicationController
 
   def show
       @event = Event.find_by_id(params[:id])
+      @participants = @event.participants
+      @contributions = @event.contributions
+      
   end
 
 	def destroy
