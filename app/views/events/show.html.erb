@@ -23,7 +23,7 @@
                         <p class="descr">Participants</p>
                         <% @contributions.each do |f|%>
                             <div>
-                                <%= f.user.email %> paid $<%= f.paid %> of her share of $<%= f.amount %>
+                                <%= f.user.email %> paid $<%= f.paid %> of their share of $<%= f.amount %>
                             </div>
                         <% end %>
                     </div>
