@@ -13,7 +13,7 @@ class DebtsController < ApplicationController
       elsif @debt.amount == @payment
         @debt.destroy
       else
-          #tried to pay too much
+          @debt.destroy
       end
     else
       #shouldn't be paying debt
