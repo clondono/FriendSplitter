@@ -112,6 +112,8 @@ class Event < ActiveRecord::Base
 
 
     private 
+
+    # Update and simplify debts between users
     def consolidateDebts(posCont, negCont, debtAmount)
         ower=negCont.user
         owed=posCont.user
