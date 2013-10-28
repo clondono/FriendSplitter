@@ -1,3 +1,5 @@
+# Primary author: Angel
+
 class EventsController < ApplicationController
   
   def new

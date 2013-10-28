@@ -1,3 +1,5 @@
+# Primary author: Christian
+
 class DebtsController < ApplicationController
   
   def update
