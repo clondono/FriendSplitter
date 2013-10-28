@@ -11,6 +11,7 @@ class Event < ActiveRecord::Base
 
   # Associate an event with many contributions.
   has_many :contributions, dependent: :destroy
+  has_many :participants, through: :contributions, source: :user
 
   accepts_nested_attributes_for :contributions
 
@@ -73,6 +74,7 @@ class Event < ActiveRecord::Base
 
   end
 
+  # This is repetitive...Combine with createContribution -Angel
   def createEvenContributions(eventContributions)
   	@count = self.contributions.length
   	@evenSplit = self.amount/@count
@@ -85,11 +87,28 @@ class Event < ActiveRecord::Base
   end
 
   def createContributions(eventContributions)
-    eventContributions[:contributions_attributes].each do |contribution|
+    eventContributions.each do |contribution|
       contributor = User.find_by_email(contribution[1]["email"])
       contributor.setContribution!(self, contribution[1]["amount"], contribution[1]["paid"])
     end
   end  
+
+
+
+  # Checks that a set of contributions adds up
+  # to the total amount of a event cost.
+  # The total amout owed should equal the total 
+  # amount paid which should equal the event cost.
+  def self.validContributions?(contributionsInfo,amount)
+    totalAmountOwed = 0
+    totalAmountPaid = 0
+    contributionsInfo.each do |contribution|
+      totalAmountOwed += Integer(contribution[1]["amount"])
+      totalAmountPaid += Integer(contribution[1]["paid"])
+    end
+    (totalAmountOwed == totalAmountPaid and totalAmountPaid == Integer(amount))
+  end
+
 
 
   private 

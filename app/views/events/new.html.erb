@@ -1,48 +1,55 @@
 <div class="row">
-  <div class="span8 offset2">
-    <div class="welcomeContainer">
+    <div class="span8 offset2">
+        <div class="welcomeContainer">
 
-      <div class="welcomeContent">
-        <h2>Create an Event</h2>
-      </div>
+            <div class="welcomeContent">
+                <h2>Create an Event</h2>
+            </div>
 
-      <div class="createEventBox">
-        <div class="row">
-          <div class="span5 offset1">
+            <div class="createEventBox">
+                <div class="row">
+                    <div class="span5 offset1">
 
-            <%= nested_form_for(@event) do |f| %>
+                        <%= nested_form_for(@event) do |f| %>
 
-              <%= render 'partials/error_messages', object: f.object %>
+                            <%= render 'partials/error_messages', object: f.object %>
 
-              <%= f.label :title %>
-              <%= f.text_field :title, class:"inputWrap", placeholder: "Event Title", :autofocus => true %>
+                            <%= f.label :title %>
+                            <%= f.text_field :title, class:"inputWrap", placeholder: "Event Title", :autofocus => true %>
 
-              <%= f.label :description %>
-              <%= f.text_area :description, class:"inputWrap", placeholder: "What was the event?", :rows => 5 %>
+                            <%= f.label :description %>
+                            <%= f.text_area :description, class:"inputWrap", placeholder: "What was the event?", :rows => 5 %>
 
-              <%= f.label :amount %>
-              <%= f.number_field :amount, class:"inputWrap", min: 0, placeholder: "Total Amount" %>
+                            <%= f.label :amount %>
+                            <%= f.number_field :amount, class:"inputWrap", min: 0, placeholder: "Total Amount (integer)" %>
 
-              <p>Participants:</p>
+                            <br><br>
 
-              <%= f.fields_for :contributions do |p| %>
-                <%= p.email_field :email, placeholder: "Email"  %> <br>
-                $<%= p.number_field :amount, min: 0, placeholder: "Owes" %><br>
-                $<%= p.number_field :paid, min: 0, placeholder: "Paid" %>
-                <%= p.link_to_remove "Remove" %>
-              <% end %>
+                            <p>Participants (remember to include yourself):</p>
 
-              <p><%= f.link_to_add "Add Participant", :contributions %></p>
+                            <%= f.fields_for :contributions do |p| %>
+                                <div class="participDiv">
+                                    <%= p.email_field :email, placeholder: "Email"  %>
 
-              <div class="center">
-              <%= f.submit "Create Event", class: "btn btn-large btn-inverse" %>
-              </div>
-            <% end %>
+                                    <div class="controls controls-row">
+                                        <%= p.number_field :amount, class: "span2", min: 0, placeholder: "$ Owes (integer)" %>
+                                        <%= p.number_field :paid, class: "span2", min: 0, placeholder: "$ Paid (integer)" %>
+                                        <%= p.link_to_remove "Remove", class: "pull-right" %>
+                                    </div>
+                                </div>
+                            <% end %>
 
-          </div>
+                            <p><%= f.link_to_add "add another", :contributions , class:"smallGreyBtn"%></p>
+
+                            <div class="center">
+                                <%= f.submit "Create Event", class: "welcomeBtn" %>
+                            </div>
+                        <% end %>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
-      </div>
-
     </div>
-  </div>
 </div>

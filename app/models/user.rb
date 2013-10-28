@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
                                    dependent:   :destroy
   has_many :debtors, through: :owed_debts, source: :owner
   has_many :events, foreign_key: "creator_id", dependent: :destroy
+  has_many :participationInEvent, through: :contributions, source: :event
   
   # Associate a user with contributions
   has_many :contributions, dependent: :destroy
@@ -24,8 +25,22 @@ class User < ActiveRecord::Base
     contributions.create!(event_id: event.id, amount: amount, paid: paid)
   end
 
-  def owes?(other_user)
-    debts.find_by(indebted_id: other_user.id)
+  # Checks if the user owes another user.
+  def owes?(otherUser)
+    debts.find_by(indebted_id: otherUser.id)
+  end
+
+  # Checks that all emails in the contribution attributes
+  # are belong to users.
+  def self.validEmails?(contributionAttributes)
+    valid = true
+    contributionAttributes.each do |contribution|
+      contributor = User.find_by_email(contribution[1]["email"])
+      if contributor.nil?
+        valid = false
+      end
+    end
+    return valid
   end
 
 end

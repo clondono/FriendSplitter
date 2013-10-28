@@ -46,6 +46,8 @@
 
 .links{
     margin-top: 40px;
+    text-align:center;
+    padding-bottom:20px;
 }
 
 
@@ -66,3 +68,49 @@
 .createEventBox {
     padding:0px 20px;
 }
+
+.smallGreyBtn{
+    display:inline-block;
+    background-color:#BABABA;
+    padding:4px 7px;
+    margin:0px;
+    color: #fff;
+    font-size:0.9em;
+    border-radius:3px;
+    border: 0px;
+}
+
+.smallGreyBtn:hover{
+    color: #fff;
+    background-color:#D6D6D6;
+    text-decoration:none;
+}   
+
+
+.participDiv{
+    background-color: #F7F7F7;
+    padding:10px;
+    margin: 20px 0px;
+    border-radius:10px;
+}
+
+.eventTitleDiv{
+    //background-color: #F7F7F7;
+    //border-radius:10px;
+    text-align:center;
+    padding:20px;
+    padding-bottom:0px;
+}
+
+.eventDetailDiv{
+    background-color: #F7F7F7;
+    border-radius:10px;
+    padding:20px;
+    margin-top:10px;
+}
+
+.descr{
+    color: #ED8907;
+    font-size:1.5em;
+}
+

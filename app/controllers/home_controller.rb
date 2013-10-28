@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   def index
     #Get user info if signed in
     if user_signed_in?
-      p "here...................................."
+      @participationInEvent = current_user.participationInEvent
       @contributions = current_user.contributions
       @debts = current_user.debts
       @owed_debts = current_user.owed_debts
