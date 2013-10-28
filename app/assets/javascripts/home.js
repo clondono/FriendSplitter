@@ -23,9 +23,9 @@ $(function(){
             data: { 'debt_id': debt_id, 'amount':payment},
             datatype: 'json',
             success: function(data){
-              location.reload();
           } 
           });
+          location.reload();
         };
 
   });
