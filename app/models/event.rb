@@ -1,8 +1,8 @@
 # Event model 
 
-# Ensures a debt has a "creator" and many contributions.
+# Associates an event with many contributions.
 
-# @author Angel
+# @author Angel/Christian
 
 class Event < ActiveRecord::Base
     # Makes sure every collection is associated with a user.
@@ -13,8 +13,10 @@ class Event < ActiveRecord::Base
     has_many :contributions, dependent: :destroy
     has_many :participants, through: :contributions, source: :user
 
+    # Used to create contributions while creating events.
     accepts_nested_attributes_for :contributions
 
+    # Before creating an event, make sure the following fields exist.
     validates :amount, presence: true
     validates :title, presence: true
     validates :description, presence: true
@@ -74,7 +76,17 @@ class Event < ActiveRecord::Base
 
     end
 
-    # This is repetitive...Combine with createContribution -Angel
+    # Given a set of contribution attributes, 
+    # create the contributions for each user.
+    def createContributions(eventContributions)
+        eventContributions.each do |contribution|
+            contributor = User.find_by_email(contribution[1]["email"])
+            contributor.setContribution!(self, contribution[1]["amount"], contribution[1]["paid"])
+        end
+    end  
+
+    # TODO: This is repetitive...Should be combined with createContribution 
+    #       when implemented -Comment by: Angel
     def createEvenContributions(eventContributions)
         @count = self.contributions.length
         @evenSplit = self.amount/@count
@@ -85,14 +97,6 @@ class Event < ActiveRecord::Base
             contributor.setContribution!(self, contParams[:amount], contParams[:paid])
         end
     end
-
-    def createContributions(eventContributions)
-        eventContributions.each do |contribution|
-            contributor = User.find_by_email(contribution[1]["email"])
-            contributor.setContribution!(self, contribution[1]["amount"], contribution[1]["paid"])
-        end
-    end  
-
 
 
     # Checks that a set of contributions adds up
@@ -108,8 +112,6 @@ class Event < ActiveRecord::Base
         end
         (totalAmountOwed == totalAmountPaid and totalAmountPaid == Integer(amount))
     end
-
-
 
     private 
 

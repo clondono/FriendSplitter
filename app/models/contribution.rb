@@ -10,14 +10,12 @@ class Contribution < ActiveRecord::Base
   belongs_to :user
   belongs_to :event
 
-  # Make sure that there's an associated collection/user and
-  # that every collection/user pair is unique.
+  # Note: As a hack to allow contributions to be created
+  #       at the same time as an event is, the following
+  #       validations were removed. Might try to
+  #       implement them later -Angel
   # validates :user_id, presence: true
   # validates :event_id, presence: true
   # validates :amount, presence: true
   # validates :paid, presence: true
-  # Note: since a user can pay more than his/her total amount,
-  #       there is no need to validate a relationship between
-  #       :amount and :paid
-
 end

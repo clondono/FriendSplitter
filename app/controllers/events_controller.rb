@@ -1,3 +1,11 @@
+# Controller for Debts.
+# Contains the following public actions:
+#     new - used to display the event creation form.
+#     create - handles creating an event from inputs in views/events/new.html.erb.
+#     show - handles displaying an event.
+#     destroy - used to delete an event (when a pending event is denied).
+#     update - used to change the status of an event from pending to confirmed.
+
 # Primary author: Angel
 
 class EventsController < ApplicationController
@@ -50,9 +58,7 @@ class EventsController < ApplicationController
 
   def show
       @event = Event.find_by_id(params[:id])
-      @participants = @event.participants
-      @contributions = @event.contributions
-      
+      @contributions = @event.contributions      
   end
 
 	def destroy
