@@ -20,10 +20,12 @@
                                     <td>
                                         <%= event.title %>
                                     </td>
-                                    <td class="end-col">
+                                    <td>
                                         <!-- need link to event page/path -->
                                         <%= link_to "Event Details", event %>
                                     </td>
+                                    <td>
+                                        <%= link_to "Delete event", event, method: :delete, data: {confirm: 'Are you sure?' } %>
                                 </tr>
                             <% end %>
                         </table>
@@ -41,73 +43,13 @@
 
 
         <div class="span4">
-            <div id="debts-panel" class="center">
-                <div class="tabbable">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab1" data-toggle="tab">Debts</a></li>
-
-                        <li><a href="#tab2" data-toggle="tab">Owed Debts</a></li>
-                    </ul>
-                    <div class="tab-content rightpanel">
-                        <div class="tab-pane active rightpanel" id="tab1">
-                            <% if @debts.any? %>
-                              <table class="table">
-                                <% @debts.each do |debt| %>
-                                  <tr>
-                                      <td>
-                                        <%= debt.indebted.first_name %>
-                                      </td>
-                                      <td>
-                                        <%= debt.amount %>
-                                      </td>
-
-                                      <td class="end-col">
-                                        <!-- need link to event page/path -->
-                                        <a id="pay<%=debt.id%>" class="payButton" href="#">PAY</a>
-                                      </td>
-                                  </tr>
-                                <% end %>
-                              </table>
-                            <% else %>
-                              <p class="center"> You don't seem to have any debts!</p>
-                            <% end %>
-                        </div>
-                        <div class="tab-pane rightpanel" id="tab2">
-                            <% if @owed_debts.any? %>
-                              <table class="table">
-                                <% @owed_debts.each do |owed_debt| %>
-                                  <tr>
-                                      <td>
-                                        <%= owed_debt.owner.email %>
-                                      </td>
-                                      <td>
-                                        <%= owed_debt.amount %>
-                                      </td>
-
-                                      <td class="end-col">
-                                        <!-- need link to event page/path -->
-                                        <button id="pay<%=owed_debt.id%>" class="payButton" >PAY</button>
-                                      </td>
-                                      </td>
-                                  </tr>
-                                <% end %>
-                              </table>
-                            <% else %>
-                              <p class="center"> You don't seem to be owed any money!</p>
-                            <% end %>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <%= render "debtpanel" %>
         </div>
-
     </div>
 
 
 <%else%>
-
     <%= render "notloggedin" %>
-
 <%end%>
 
 

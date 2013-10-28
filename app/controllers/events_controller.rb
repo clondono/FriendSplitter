@@ -54,7 +54,10 @@ class EventsController < ApplicationController
   end
 
 	def destroy
-    # TODO implement after implementing pending events.
+        @event = Event.find_by_id(params[:id])
+        @event.destroy
+        flash[:success] = "Event deleted."
+        redirect_to root_url
 	end
 
 	def update
