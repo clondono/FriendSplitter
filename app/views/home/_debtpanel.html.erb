@@ -1,0 +1,34 @@
+<div id="debts-panel" class="center">
+    <div class="tabbable">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab1" data-toggle="tab">Debts</a></li>
+            <li><a href="#tab2" data-toggle="tab">Owed Debts</a></li>
+        </ul>
+
+        <div class="tab-content rightpanel">
+
+            <div class="tab-pane active rightpanel" id="tab1">
+                <% if @debts.any? %>
+                    <% @debts.each do |debt| %>
+                        <%= render "debtsIOwe", debt: debt %>
+
+                    <% end %>
+                <% else %>
+                    <p class="center"> You don't seem to have any debts!</p>
+                <% end %>
+            </div>
+
+
+            <div class="tab-pane rightpanel" id="tab2">
+                <% if @owed_debts.any? %>
+                    <% @owed_debts.each do |owed_debt| %>
+                        <%= render "debtsIOwn", owed_debt: owed_debt %>
+                    <% end %>
+
+            <% else %>
+                <p class="center"> You don't seem to be owed any money!</p>
+            <% end %>
+        </div>
+    </div>
+</div>
+
