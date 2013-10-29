@@ -1,0 +1,17 @@
+<div id="myModal<%=updatedebt.id%>" class="modal hide fade" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Declare you have paid your debt:</h3>
+    </div>
+    <div class="modal-body">
+
+        <%= form_for updatedebt do |form| %>
+            <%= form.text_field :amount %>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <%= form.submit "Paid", class: "btn btn-success" %>
+
+        <% end %>
+    </div>
+</div>

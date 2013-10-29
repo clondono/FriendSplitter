@@ -7,29 +7,38 @@ class DebtsController < ApplicationController
   
   # Update debts object after some transaction
   def update
-    @debt = Debt.find_by_id(params[:debt_id])
-    @payment = params[:amount].to_i
+
+    @debt = Debt.find_by_id(params[:id]) #:debt_id])
+    @payment = params[:debt][:amount].to_i
 
     # Make sure the person paying the debt is
     # the user that is signed in.
     if current_user.id == @debt.owner.id
 
+      # If user repays less than debt, update debt amount 
+      # by decreasing it
       if @debt.amount > @payment
         @debt.updateVal(@debt.amount-@payment)
 
+      # If user repays the debt exactly, destroy the debt
       elsif @debt.amount == @payment
         @debt.destroy
 
-      # Note: If a user tries to pay more than the debt,
-      # we would simply consider the debt being paid
-      # and ignore the excess amount.
-      else
+      # If user pays more than the debt, destroy the debt and calculate
+      # the new debt where the debt owner and indebted relationships
+      # are now reversed  
+      elsif @debt.amount < @payment
+          newIndebted = @debt.owner
+          newOwner = @debt.indebted
+          newAmount = @payment - @debt.amount
           @debt.destroy
+          newOwner.debts.create!(owner_id: newOwner.id, indebted_id: newIndebted.id, amount: newAmount)
+
       end
     else
       flash[:error] = "You cannot pay the person's debt."
-      redirect_to root_url
     end
+    redirect_to(root_url)
   end
 
 end

@@ -12,7 +12,7 @@ class EventsController < ApplicationController
   
   def new
     @event = Event.new
-    2.times {@event.contributions.build}    
+    1.times {@event.contributions.build}    
   end
   
  	def create
@@ -76,7 +76,7 @@ class EventsController < ApplicationController
     # Strong parameters for security (rails way)
     def event_params
         params.require(:event).permit(:title, 
-                                      :description, :amount, contributions_attributes:[:email,:amount,:paid])
+                                      :description, :amount, :myemail, :myamount, :mypaid, contributions_attributes:[:email,:amount,:paid])
     end
 
 end

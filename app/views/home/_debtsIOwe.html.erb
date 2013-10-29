@@ -1,4 +1,9 @@
+<%= render "debtPay", updatedebt: debt %>
+
 <div class="debtBox">
     You owe <%= debt.indebted.first_name %> $<%= debt.amount %>.
-    <a id="pay<%=debt.id%>" class="payButton" href="">Paid</a>
+
+    <button type="button" data-toggle="modal" data-target="#myModal<%=debt.id%>" class="btn btn-mini">Paid</button>
 </div>
+
+
