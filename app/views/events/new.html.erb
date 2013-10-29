@@ -32,17 +32,6 @@
                                 <div class="participDiv">
 
                                     <div class="controls controls-row">
-                                        <%= p.email_field :email, class: "span2", value: current_user.email  %>
-                                        <%= p.number_field :amount, class: "span2", min: 0, placeholder: "$ Owes" %>
-                                        <%= p.number_field :paid, class: "span2", min: 0, placeholder: "$ Paid" %>
-                                    </div>
-                                </div>
-                            <% end %>
-
-                            <%= f.fields_for :contributions do |p| %>
-                                <div class="participDiv">
-
-                                    <div class="controls controls-row">
                                         <%= p.email_field :email, class: "span2", placeholder: "Email"  %>
                                         <%= p.number_field :amount, class: "span2", min: 0, placeholder: "$ Owes" %>
                                         <%= p.number_field :paid, class: "span2", min: 0, placeholder: "$ Paid" %>
@@ -50,7 +39,7 @@
                                 </div>
                             <% end %>
 
-                            <!-- <p><%= f.link_to_add "add another", :contributions , class:"smallGreyBtn"%></p> -->
+                            <p><%= f.link_to_add "add another", :contributions , class:"smallGreyBtn"%></p>
 
                             <div class="center">
                                 <%= f.submit "Create Event", class: "welcomeBtn" %>

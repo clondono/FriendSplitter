@@ -3,6 +3,9 @@
 #     update - handles updating a debt appropriately.
 # Primary author: Christian
 
+# NOTE/TODO: Isn't this redundant? Can't we just call 
+#            existing methods in the debt model?
+
 class DebtsController < ApplicationController
   
   # Update debts object after some transaction
