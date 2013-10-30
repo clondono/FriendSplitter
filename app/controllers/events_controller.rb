@@ -12,7 +12,15 @@ class EventsController < ApplicationController
   
   def new
     @event = Event.new
-    1.times {@event.contributions.build}    
+
+    # Populate previously entered fields if any.
+    @event.title = params[:title] if not params[:title].blank?
+    @event.description = params[:description] if not params[:description].blank?
+    @event.amount = params[:amount] if not params[:amount].blank?
+
+    # Populate initial participant field with current user's email.
+    @event.contributions.build(email:current_user.email) 
+    1.times {@event.contributions.build}
   end
   
  	def create
@@ -25,11 +33,11 @@ class EventsController < ApplicationController
     amount = event_params.slice(:amount)
     newParams = title.merge(desc).merge(amount)
     
-    # Check is emails are emails.
+    # Check if emails are emails.
     # TODO check for duplicates....
     if User.validEmails?(contributionsInfo)
       # Check if valid contribution amounts.
-      if Event.validContributions?(contributionsInfo,amount[:amount])
+      if Event.validContributions?(contributionsInfo, amount[:amount])
         # Create the event.
         @event = Event.new(newParams)
         # Save event and redirect appropriately.
@@ -52,7 +60,8 @@ class EventsController < ApplicationController
     else
       # Give error on invalid emails.
       flash[:error] = "Please check the email addresses entered."
-      redirect_to new_event_path
+      redirect_to new_event_path(:amount => event_params[:amount], 
+        :title => event_params[:title], :description => event_params[:description])
     end
   end
 
@@ -75,8 +84,8 @@ class EventsController < ApplicationController
   private
     # Strong parameters for security (rails way)
     def event_params
-        params.require(:event).permit(:title, 
-                                      :description, :amount, :myemail, :myamount, :mypaid, contributions_attributes:[:email,:amount,:paid])
+        params.require(:event).permit(:title, :description, :amount, 
+          contributions_attributes:[:email,:amount,:paid])
     end
 
 end
