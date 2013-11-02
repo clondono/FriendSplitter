@@ -80,9 +80,15 @@ GEM
       rack
     omniauth-facebook (1.4.1)
       omniauth-oauth2 (~> 1.1.0)
+    omniauth-google-oauth2 (0.2.1)
+      omniauth (~> 1.0)
+      omniauth-oauth2
     omniauth-oauth2 (1.1.1)
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
+    omniauth-venmo (1.0.1)
+      omniauth
+      omniauth-oauth2 (~> 1.1)
     orm_adapter (0.4.0)
     pg (0.15.1)
     polyglot (0.3.3)
@@ -156,6 +162,8 @@ DEPENDENCIES
   nested_form
   omniauth
   omniauth-facebook
+  omniauth-google-oauth2
+  omniauth-venmo
   pg
   rails (= 4.0.0)
   rails_12factor

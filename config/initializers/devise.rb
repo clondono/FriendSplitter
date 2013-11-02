@@ -232,6 +232,11 @@ Devise.setup do |config|
 
   require "omniauth-facebook"
   config.omniauth :facebook, "1416836661879880", "df038c30ed6acaf5001f6436892cfb45", :strategy_class => OmniAuth::Strategies::Facebook
+  require "omniauth-venmo"
+  config.omniauth :venmo, "1470", "r9jGM5wqGwr2XsBp3ka9YLTuDnaWDDLj", :strategy_class => OmniAuth::Strategies::Venmo
+  require "omniauth-google-oauth2"
+  config.omniauth :google_oauth2, "253636674432.apps.googleusercontent.com", "qtikHy4RKRG8h4vvPIXqFrwC"
+
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'

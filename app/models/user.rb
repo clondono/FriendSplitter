@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook]
+         :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook, :venmo, :google_oauth2]
 
   # Associate a user with a set of users that they owe
   has_many :debts, foreign_key: "owner_id", dependent: :destroy
@@ -46,6 +46,40 @@ class User < ActiveRecord::Base
     end
     user
   end
+
+ # credentials=<OmniAuth::AuthHash expires=false token="EnfdcCVbZn9fhD36mPgtLQEB7qEWEUMT"> extra=OmniAuth::AuthHash raw_info=<OmniAuth::AuthHash balance=0.0 email="christianlondono91@gmail.com" firstname="Christian" id="664762" lastname="Londono" name="Christian Londono" phone="12108528063" picture="https://s3.amazonaws.com/venmo/no-image.gif" username="christian-londono">> info=#<OmniAuth::AuthHash::InfoHash balance=0.0 email="christianlondono91@gmail.com" image="https://s3.amazonaws.com/venmo/no-image.gif" name="Christian Londono" phone="12108528063" urls=#<OmniAuth::AuthHash profile="https://venmo.com/christian-londono"> username="christian-londono"> provider="venmo" uid="664762">
+
+  def self.find_for_venmo_oauth(auth, signed_in_resource=nil)
+    user = User.where(:email => auth.info.email).first
+
+    
+    unless user
+      user = User.create(  provider:auth.provider,
+                           uid:auth.uid,
+                           email:auth.info.email,
+                           password:Devise.friendly_token[0,20],
+                           last_name:auth.extra.raw_info.lastname,
+                           first_name:auth.extra.raw_info.firstname
+                           )
+
+    end
+    user
+  end
+
+def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
+    data = access_token.info
+    user = User.where(:email => data["email"]).first
+
+    unless user
+        user = User.create(name: data["name"],
+                           email: data["email"],
+                           first_name: data["first_name"],
+                           last_name: data["last_name"],
+                           password: Devise.friendly_token[0,20]
+                           )
+    end
+    user
+end
 
   # Checks that all emails in the contribution attributes
   # are belong to users.
