@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook]
 
   # Associate a user with a set of users that they owe
   has_many :debts, foreign_key: "owner_id", dependent: :destroy
@@ -28,6 +28,23 @@ class User < ActiveRecord::Base
   # Checks if the user owes another user.
   def owes?(otherUser)
     debts.find_by(indebted_id: otherUser.id)
+  end
+
+  def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
+    user = User.where(:email => auth.info.email).first
+    puts 
+    unless user
+      user = User.create(name:auth.extra.raw_info.name,
+                           provider:auth.provider,
+                           uid:auth.uid,
+                           email:auth.info.email,
+                           password:Devise.friendly_token[0,20],
+                           last_name:auth.info.last_name,
+                           first_name:auth.info.first_name
+                           )
+
+    end
+    user
   end
 
   # Checks that all emails in the contribution attributes
