@@ -20,6 +20,8 @@ class User < ActiveRecord::Base
   # Associate a user with contributions
   has_many :contributions, dependent: :destroy
 
+  has_many :authentications, dependent: :destroy
+
   # Creates a contribution for the user for the given params.
   def setContribution!(event, amount, paid)
     contributions.create!(event_id: event.id, amount: amount, paid: paid)
@@ -32,19 +34,20 @@ class User < ActiveRecord::Base
 
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     user = User.where(:email => auth.info.email).first
-    puts 
     unless user
-      user = User.create(name:auth.extra.raw_info.name,
-                           provider:auth.provider,
-                           uid:auth.uid,
-                           email:auth.info.email,
+      user = User.create(  email:auth.info.email,
                            password:Devise.friendly_token[0,20],
                            last_name:auth.info.last_name,
                            first_name:auth.info.first_name
                            )
 
     end
+    @authentication = user.authentications.where(provider: auth.provider).first
+    unless @authentication
+      @authentication = user.authentications.create(provider: auth.provider, uid: auth.uid)
+    end
     user
+
   end
 
  # credentials=<OmniAuth::AuthHash expires=false token="EnfdcCVbZn9fhD36mPgtLQEB7qEWEUMT"> extra=OmniAuth::AuthHash raw_info=<OmniAuth::AuthHash balance=0.0 email="christianlondono91@gmail.com" firstname="Christian" id="664762" lastname="Londono" name="Christian Londono" phone="12108528063" picture="https://s3.amazonaws.com/venmo/no-image.gif" username="christian-londono">> info=#<OmniAuth::AuthHash::InfoHash balance=0.0 email="christianlondono91@gmail.com" image="https://s3.amazonaws.com/venmo/no-image.gif" name="Christian Londono" phone="12108528063" urls=#<OmniAuth::AuthHash profile="https://venmo.com/christian-londono"> username="christian-londono"> provider="venmo" uid="664762">
@@ -54,14 +57,16 @@ class User < ActiveRecord::Base
 
     
     unless user
-      user = User.create(  provider:auth.provider,
-                           uid:auth.uid,
-                           email:auth.info.email,
+      user = User.create(  email:auth.info.email,
                            password:Devise.friendly_token[0,20],
                            last_name:auth.extra.raw_info.lastname,
                            first_name:auth.extra.raw_info.firstname
                            )
 
+    end
+    @authentication = user.authentications.where(provider: auth.provider).first
+    unless @authentication
+      @authentication = user.authentications.create(provider: auth.provider, uid: auth.uid)
     end
     user
   end
@@ -69,14 +74,17 @@ class User < ActiveRecord::Base
 def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
     data = access_token.info
     user = User.where(:email => data["email"]).first
-
+        
     unless user
-        user = User.create(name: data["name"],
-                           email: data["email"],
+        user = User.create(email: data["email"],
                            first_name: data["first_name"],
                            last_name: data["last_name"],
                            password: Devise.friendly_token[0,20]
                            )
+    end
+    @authentication = user.authentications.where(provider: access_token.provider).first
+    unless @authentication
+      @authentication = user.authentications.create(provider: access_token.provider, uid: access_token.uid)
     end
     user
 end
