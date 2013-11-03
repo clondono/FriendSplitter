@@ -10,7 +10,7 @@ class DebtTest < ActiveSupport::TestCase
     end
 
     test "Update Debt val double" do
-        debt1 = debts(:two)  
+        debt1 = debts(:one)  
         debt1.updateVal!(8.20)      
 
         assert( debt1.amount == 8.20 , "Debt value after update should be 8.20")

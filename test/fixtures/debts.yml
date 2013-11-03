@@ -1,14 +1,10 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 #
 #
-one:
-    owner: one (User)
-    indebted: two (User)
-    amount: 3.00
 
-two:
-    owner: three (User)
-    indebted: two (User)
+one:
+    owner_id: 3
+    indebted_id: 2 
     amount: 3.00
 
 
