@@ -132,5 +132,27 @@ class Event < ActiveRecord::Base
         (totalAmountOwed == totalAmountPaid and totalAmountPaid == Integer(amount))
     end
 
+    # Returns whether or not the event is pending
+    def isPending?
+        self.pending
+    end
+
+    # Checks if all of the event's contributions
+    # were confirmed.
+    def confirmed?
+        self.contributions.each do |contribution|
+            return false if contribution.isPending?
+        end
+        return true
+    end
+
+    # Checks if all of the event's contributions
+    # were confirmed.
+    def confirm!
+        self.pending = false
+        self.save
+        self.createDebts
+    end
+
     
 end

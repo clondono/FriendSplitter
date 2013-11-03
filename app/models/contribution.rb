@@ -18,4 +18,15 @@ class Contribution < ActiveRecord::Base
   # validates :event_id, presence: true
   # validates :amount, presence: true
   # validates :paid, presence: true
+
+  # Returns whether or not the event is pending
+  def isPending?
+    self.pending
+  end
+
+  # Confirms a contribution
+  def confirm!
+    self.pending = false
+    self.save
+  end
 end

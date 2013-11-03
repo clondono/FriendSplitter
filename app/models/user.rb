@@ -71,23 +71,23 @@ class User < ActiveRecord::Base
     user
   end
 
-def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
-    data = access_token.info
-    user = User.where(:email => data["email"]).first
-        
-    unless user
-        user = User.create(email: data["email"],
-                           first_name: data["first_name"],
-                           last_name: data["last_name"],
-                           password: Devise.friendly_token[0,20]
-                           )
-    end
-    @authentication = user.authentications.where(provider: access_token.provider).first
-    unless @authentication
-      @authentication = user.authentications.create(provider: access_token.provider, uid: access_token.uid)
-    end
-    user
-end
+  def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
+      data = access_token.info
+      user = User.where(:email => data["email"]).first
+          
+      unless user
+          user = User.create(email: data["email"],
+                             first_name: data["first_name"],
+                             last_name: data["last_name"],
+                             password: Devise.friendly_token[0,20]
+                             )
+      end
+      @authentication = user.authentications.where(provider: access_token.provider).first
+      unless @authentication
+        @authentication = user.authentications.create(provider: access_token.provider, uid: access_token.uid)
+      end
+      user
+  end
 
   # Checks that all emails in the contribution attributes
   # are belong to users.
@@ -100,6 +100,54 @@ end
       end
     end
     return valid
+  end
+
+  # Returns the users events, seperated
+  # into confirmed and pending events.
+  def getEvents
+    pendingEvents = []
+    confirmedEvents = []
+    allEvents = self.participationInEvent
+    allEvents.each do |event|
+      if event.isPending?
+        pendingEvents.push(event)
+      else
+        confirmedEvents.push(event)
+      end
+    end
+    organizedEvents = {}
+    organizedEvents["confirmed"] = confirmedEvents
+    organizedEvents["pending"] = pendingEvents
+    return organizedEvents
+  end
+
+  # Returns whether or not the user
+  # confirmed the event. Assumes the 
+  # user has a contribution in the event.
+  def confirmedEvent?(event)
+    contributions = event.contributions
+    myContribution = nil
+    contributions.each do |contribution|
+      if self == contribution.user
+        myContribution = contribution
+        break
+      end
+    end
+    return (not myContribution.isPending?)
+  end
+
+  # Returns the user contribution in a 
+  # given event
+  def getContribution(event)
+    contributions = event.contributions
+    myContribution = nil
+    contributions.each do |contribution|
+      if self == contribution.user
+        myContribution = contribution
+        break
+      end
+    end
+    return myContribution
   end
 
 end
