@@ -1,7 +1,7 @@
 <%= render "debtPay", updatedebt: debt %>
 
 <div class="debtBox">
-    You owe <%= debt.indebted.first_name %> $<%= debt.amount %>.
+    You owe <%= debt.indebted.first_name %> $<%= number_with_precision(debt.amount, precision:2) %>.
 
     <button type="button" data-toggle="modal" data-target="#myModal<%=debt.id%>" class="btn btn-mini">Paid</button>
 </div>

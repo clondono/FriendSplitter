@@ -33,8 +33,8 @@
 
                                     <div class="controls controls-row">
                                         <%= p.email_field :email, class: "span2", placeholder: "Email"  %>
-                                        <%= p.number_field :amount, class: "span2", min: 0, placeholder: "$ Owes" %>
-                                        <%= p.number_field :paid, class: "span2", min: 0, placeholder: "$ Paid" %>
+                                        <%= p.text_field :amount, class: "span2", min: 0, placeholder: "$ Owes" %>
+                                        <%= p.text_field :paid, class: "span2", min: 0, placeholder: "$ Paid" %>
                                     </div>
                                 </div>
                             <% end %>

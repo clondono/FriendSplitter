@@ -3,6 +3,10 @@
 # Associates an event with many contributions.
 
 # @author Angel/Christian
+#
+
+require 'bigdecimal'
+require 'bigdecimal/util'
 
 class Event < ActiveRecord::Base
     # Makes sure every collection is associated with a user.
@@ -126,10 +130,12 @@ class Event < ActiveRecord::Base
         totalAmountOwed = 0
         totalAmountPaid = 0
         contributionsInfo.each do |contribution|
-            totalAmountOwed += Integer(contribution[1]["amount"])
-            totalAmountPaid += Integer(contribution[1]["paid"])
+            logger.debug "contributionV: #{contribution}"
+            totalAmountOwed += BigDecimal(contribution[1]["amount"])
+            totalAmountPaid += BigDecimal(contribution[1]["paid"])
         end
-        (totalAmountOwed == totalAmountPaid and totalAmountPaid == Integer(amount))
+        logger.debug "totalAmountOwed: #{totalAmountOwed}"
+        return (totalAmountOwed == totalAmountPaid and totalAmountPaid == BigDecimal(amount))
     end
 
     # Returns whether or not the event is pending
