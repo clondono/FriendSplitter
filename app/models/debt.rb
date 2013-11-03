@@ -14,6 +14,7 @@ class Debt < ActiveRecord::Base
   validates :amount, presence: true
 
   # Updates the debt.
+  # requires: newVal > 0
   def updateVal!(newVal)
     update_attributes(amount: newVal)
   end
