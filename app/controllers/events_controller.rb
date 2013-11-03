@@ -19,8 +19,8 @@ class EventsController < ApplicationController
     @event.amount = params[:amount] if not params[:amount].blank?
 
     # Populate initial participant field with current user's email.
-    @event.contributions.build(email:current_user.email) 
-    1.times {@event.contributions.build}
+    @event.contributions.new(email:current_user.email) 
+    2.times {@event.contributions.new}
   end
   
  	def create
@@ -32,6 +32,7 @@ class EventsController < ApplicationController
     desc = event_params.slice(:description)
     amount = event_params.slice(:amount)
     newParams = title.merge(desc).merge(amount)
+
     
     # Check if emails are emails.
     # TODO check for duplicates....
@@ -86,6 +87,9 @@ class EventsController < ApplicationController
     def event_params
         params.require(:event).permit(:title, :description, :amount, 
           contributions_attributes:[:email,:amount,:paid])
+    end
+
+    def contributions_params
     end
 
 end
