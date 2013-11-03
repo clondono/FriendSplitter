@@ -42,9 +42,8 @@ class EventsController < ApplicationController
         @event = Event.new(newParams)
         # Save event and redirect appropriately.
         if @event.save
-          # Create contributions and debts.
+          # Create pending contributions.
           @event.createContributions(contributionsInfo)
-          @event.createDebts
 
           flash[:success] = "Event Created"
           redirect_to root_url
@@ -73,7 +72,7 @@ class EventsController < ApplicationController
 	def destroy
         @event = Event.find_by_id(params[:id])
         @event.destroy
-        flash[:success] = "Event deleted."
+        flash[:success] = "Thanks. That event has been deleted."
         redirect_to root_url
 	end
 

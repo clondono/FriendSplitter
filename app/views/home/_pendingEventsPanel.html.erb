@@ -1,0 +1,28 @@
+<!-- author: Angel -->
+<h2> Pending Events </h2>
+<% if @pendingEvents.any? %>
+  <table class="table">
+        <% @pendingEvents.each do |event| %>
+            <tr>
+                <td>
+                    <%= event.title %>
+                </td>
+                <td>
+                    <%= link_to "Event Details", event %>
+                </td>
+                <td>
+                    <% if current_user.confirmedEvent?(event) %>
+                      <em>Pending</em>
+                    <% else %>
+                      <%= link_to "Confirm", approve_contribution_path(current_user.getContribution(event))%> |
+
+                      <%= link_to "Decline", decline_contribution_path(current_user.getContribution(event))%>  
+                    <% end%>
+                </td>
+            </tr>
+        <% end %>
+    </table>
+
+<% else %>
+    <p class="center"> No Pending Events.</p>
+<% end %>

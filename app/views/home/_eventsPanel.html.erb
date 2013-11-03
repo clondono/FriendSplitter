@@ -1,0 +1,20 @@
+<h2>Event History</h2>
+<% if @events.any? %>
+
+    <table class="table">
+        <% @events.each do |event| %>
+            <tr>
+                <td>
+                    <%= event.title %>
+                </td>
+                <td>
+                    <!-- need link to event page/path -->
+                    <%= link_to "Event Details", event %>
+                </td>
+            </tr>
+        <% end %>
+    </table>
+
+<% else %>
+    <p class="center"> You don't seem to have participated in any events.</p>
+<% end %>

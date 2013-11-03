@@ -1,0 +1,10 @@
+<div class="row">
+    <%= link_to "Create New Event", new_event_path, id: "createEventBtn" %> 
+
+    <!-- Not implementing in this step: <button class="btn btn-primary" type="button">Manage Groups</button> -->
+
+    <%= render "pendingEventsPanel" %>
+
+    <%= render "eventsPanel" %>
+
+</div>
