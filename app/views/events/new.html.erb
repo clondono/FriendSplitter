@@ -22,8 +22,10 @@
                             <%= f.text_area :description, class:"inputWrap", placeholder: "What was the event?", :rows => 5 %>
 
                             <%= f.label :amount %>
-                            <%= f.number_field :amount, class:"inputWrap", min: 0, placeholder: "Total Amount" %>
+                            <%= f.text_field :amount, class:"inputWrap", placeholder: "Total Amount (ie. $20.00)" %>
 
+                            <br><br>
+                            Optional: Fill in total and participant emails, then click <input type="button" id="evenPay" class="btn btn-mini" value="Even Split"></input>
                             <br><br>
 
                             <p>Participants:</p>
@@ -32,10 +34,11 @@
                                 <div class="participDiv">
 
                                     <div class="controls controls-row">
-                                        <%= p.email_field :email, class: "span2", placeholder: "Email"  %>
-                                        <%= p.text_field :amount, class: "span2", min: 0, placeholder: "$ Owes" %>
-                                        <%= p.text_field :paid, class: "span2", min: 0, placeholder: "$ Paid" %>
+                                        <%= p.email_field :email, class: "span2 contrEmail", placeholder: "Email"  %>
+                                        <%= p.text_field :amount, class: "span2 contrAmt",  placeholder: "$ Owes" %>
+                                        <%= p.text_field :paid, class: "span2 contrPaid", placeholder: "$ Paid" %>
                                     </div>
+                                    <%= p.link_to_remove "Remove" %>
                                 </div>
                             <% end %>
 
@@ -53,3 +56,5 @@
         </div>
     </div>
 </div>
+
+<%= render "new.js" %>
