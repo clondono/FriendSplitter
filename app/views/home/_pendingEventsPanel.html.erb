@@ -14,7 +14,8 @@
                     <% if current_user.confirmedEvent?(event) %>
                       <em>Pending</em>
                     <% else %>
-                      <%= link_to "Confirm", approve_contribution_path(current_user.getContribution(event))%> |
+                    <%= render "eventsConfirm", confirmEvent: event %>
+                    <a type="button" data-toggle="modal" data-target="#myConfirmModal<%=event.id%>" style=" cursor:pointer">Confirm</a> |
 
                       <%= link_to "Decline", decline_contribution_path(current_user.getContribution(event))%>  
                     <% end%>

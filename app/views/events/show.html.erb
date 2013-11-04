@@ -24,7 +24,7 @@
                         <p class="descr">Participants</p>
                         <% @contributions.each do |contribution|%>
                             <div>
-                                <%= contribution.user.email %> paid $<%= number_with_precision(contribution.paid, precision:2) %> of their share of $<%= number_with_precision(contribution.amount, precision:2) %>
+                                <%= contribution.user.first_name %> <%= contribution.user.last_name %> paid $<%= number_with_precision(contribution.paid, precision:2) %> of their share of $<%= number_with_precision(contribution.amount, precision:2) %>
                             </div>
                         <% end %>
                     </div>
@@ -32,6 +32,15 @@
 
                 </div>
             </div>
+
+            <% if current_user.confirmedEvent?(@event) %>
+                      <em>Pending</em>
+                    <% else %>
+                    <%= render "home/eventsConfirm", confirmEvent: @event %>
+                    <a type="button" data-toggle="modal" data-target="#myConfirmModal<%=@event.id%>" style=" cursor:pointer">Confirm</a> |
+
+                      <%= link_to "Decline", decline_contribution_path(current_user.getContribution(@event))%>  
+                    <% end%>
 
             <div class="links">
                 <%= link_to "back", root_url %>

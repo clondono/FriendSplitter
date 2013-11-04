@@ -18,12 +18,11 @@
 //= require_tree .
 //= home
 
-
-// Used to delete participants from a Event Creation Form
-// Adapated from: http://www.youtube.com/watch?v=TG5QIAIutPc
-function removeParticipant(link){
-  console.log("called")
-  console.log(link)
-  $(link).prev("input[type=hidden]").val("1")
-  $(link).closest(".participant").hide();
-}
+// # Note: Rails uses the gem turbolinks to handle redirects,
+// #       so in order to rerun code on a redirect, the "page:change"
+// #       method is needed as well as the onReady. A better way to 
+// #       implement  this (in order to not repeat code) is to create a 
+// #       function with the code and simply call the function 
+// #       from both listeners.
+// #       However, for some reason, it wouldn't execute the code. 
+// # ***** NOTE this when/if debugging. *************************
