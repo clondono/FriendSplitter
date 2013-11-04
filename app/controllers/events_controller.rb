@@ -8,7 +8,10 @@
 # Primary author: Angel
 
 class EventsController < ApplicationController
+  # Before every action, confirm that the user is signed in.
   before_filter :check_user_signed_in
+  # Before show and destroy, check that the user is a 
+  # participant in the event.
   before_filter :authorize_user, only: [:show, :destroy]
 
   def new
