@@ -45,6 +45,7 @@ class User < ActiveRecord::Base
     @authentication = user.authentications.where(provider: auth.provider).first
     unless @authentication
       @authentication = user.authentications.create(provider: auth.provider, uid: auth.uid)
+      user.send_reset_password_instructions
     end
     user
 
@@ -67,6 +68,7 @@ class User < ActiveRecord::Base
     @authentication = user.authentications.where(provider: auth.provider).first
     unless @authentication
       @authentication = user.authentications.create(provider: auth.provider, uid: auth.uid)
+      user.send_reset_password_instructions
     end
     user
   end
@@ -85,6 +87,7 @@ class User < ActiveRecord::Base
       @authentication = user.authentications.where(provider: access_token.provider).first
       unless @authentication
         @authentication = user.authentications.create(provider: access_token.provider, uid: access_token.uid)
+        user.send_reset_password_instructions
       end
       user
   end
