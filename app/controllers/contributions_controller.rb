@@ -5,6 +5,11 @@
 # @ author Angel
 
 class ContributionsController < ApplicationController
+  # Before every action, confirm that the user is signed in.
+  before_filter :check_user_signed_in
+  # Before approve and decline, check that the user 
+  # owns the contribution
+  before_filter :authorize_user, only: [:approve, :decline]
 
   def approve
     # Confirm the contribution
@@ -39,4 +44,25 @@ class ContributionsController < ApplicationController
         format.js
     end
   end
+
+  private
+
+    # Checks that user is signed in.
+    def check_user_signed_in
+      if (not user_signed_in?)
+        flash[:error] = "Please sign in."
+        redirect_to root_url
+      end
+    end
+
+    # Checks that the user is owns the contribution
+    # before performing the action.
+    def authorize_user
+      contribution = Contribution.find(params[:id])
+
+      if (not (current_user.id == contribution.user.id) )
+        flash[:error] = "You are not allowed to confirm that contribution."
+        redirect_to root_url
+      end
+    end
 end
