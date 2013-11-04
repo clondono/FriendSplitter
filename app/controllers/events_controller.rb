@@ -4,7 +4,6 @@
 #     create - handles creating an event from inputs in views/events/new.html.erb.
 #     show - handles displaying an event.
 #     destroy - used to delete an event (when a pending event is denied).
-#     update - used to change the status of an event from pending to confirmed.
 
 # Primary author: Angel
 
@@ -18,13 +17,20 @@ class EventsController < ApplicationController
         @event.description = params[:description] if not params[:description].blank?
         @event.amount = params[:amount] if not params[:amount].blank?
 
-        # Populate initial participant field with current user's email.
-        @event.contributions.new(email:current_user.email) 
-        2.times {@event.contributions.new}
+        # Populate initial participant field with current 
+        # user's email if no contributions
+        if params[:contributions].blank?
+          @event.contributions.new(email:current_user.email) 
+          2.times {@event.contributions.new}
+        else
+          params[:contributions].each do |key, contribution|
+            @event.contributions.new(contribution)
+          end
+        end
+
     end
 
     def create
- 
         contributions = contributions_params[:contributions_attributes]
         # delete elements in contributions param array with empty email
         contributions.delete_if do |index|
@@ -33,12 +39,11 @@ class EventsController < ApplicationController
             end
         end
 
-
         # Check if emails are emails.
         # TODO check for duplicates....
         if User.validEmails?(contributions)
             # Check if valid contribution amounts.
-            if Event.validContributions?(contributions, amount[:amount])
+            if Event.validContributions?(contributions, event_params[:amount])
                 # Create the event.
                 @event = Event.new(event_params)
                 # Save event and redirect appropriately.
@@ -49,19 +54,28 @@ class EventsController < ApplicationController
                     flash[:success] = "Event Created"
                     redirect_to root_url
                 else
-                    flash[:error] = "Please check your inputs"
-                    redirect_to new_event_path
+                    # Give error on invalid event inputs.
+                    flash[:error] = "Please enter a title, description, and event amount."
+                    redirect_to new_event_path(:amount => event_params[:amount], 
+                                       :title => event_params[:title], 
+                                       :description => event_params[:description],
+                                       :contributions => contributions)
                 end
             else
                 # Give error on invalid contributions.
                 flash[:error] = "Please make sure amounts paid add up the event total."
-                redirect_to new_event_path
+                redirect_to new_event_path(:amount => event_params[:amount], 
+                                       :title => event_params[:title], 
+                                       :description => event_params[:description],
+                                       :contributions => contributions)
             end
         else
             # Give error on invalid emails.
-            flash[:error] = "Please check the email addresses entered."
+            flash[:error] = "Please make sure the email addresses entered exist."
             redirect_to new_event_path(:amount => event_params[:amount], 
-                                       :title => event_params[:title], :description => event_params[:description])
+                                       :title => event_params[:title], 
+                                       :description => event_params[:description],
+                                       :contributions => contributions)
         end
     end
 
@@ -75,10 +89,6 @@ class EventsController < ApplicationController
         @event.destroy
         flash[:success] = "Thanks. That event has been deleted."
         redirect_to root_url
-    end
-
-    def update
-        # TODO implement after implementing pending events.
     end
 
     private
