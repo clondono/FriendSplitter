@@ -33,6 +33,15 @@
                 </div>
             </div>
 
+            <% if current_user.confirmedEvent?(@event) %>
+                      <em>Pending</em>
+                    <% else %>
+                    <%= render "home/eventsConfirm", confirmEvent: @event %>
+                    <a type="button" data-toggle="modal" data-target="#myConfirmModal<%=@event.id%>" style=" cursor:pointer">Confirm</a> |
+
+                      <%= link_to "Decline", decline_contribution_path(current_user.getContribution(@event))%>  
+                    <% end%>
+
             <div class="links">
                 <%= link_to "back", root_url %>
             </div>
