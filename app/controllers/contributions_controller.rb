@@ -7,20 +7,27 @@
 class ContributionsController < ApplicationController
 
   def approve
-    # Confirm the contribution
-    contribution = Contribution.find(params[:id])
-    contribution.confirm!
+    if current_user.valid_password?(params[:password])
+    
+        # Confirm the contribution
+        contribution = Contribution.find(params[:id])
+        contribution.confirm!
 
-    # Update event if a;; contributions have been confirmed.
-    event = contribution.event
-    event.confirm! if event.confirmed?
+        # Update event if a;; contributions have been confirmed.
+        event = contribution.event
+        event.confirm! if event.confirmed?
 
-    respond_to do |format|
-        format.html { 
-            flash[:success] = "Thanks. That event has been confirmed."
-            redirect_to root_url 
-        }
-        format.js
+        respond_to do |format|
+            format.html { 
+                flash[:success] = "Thanks. That event has been confirmed."
+                redirect_to root_url 
+            }
+            format.js
+        end
+    else
+        flash[:error] = "Incorrect Password"
+        redirect_to root_url 
+
     end
   end
 

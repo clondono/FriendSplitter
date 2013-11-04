@@ -1,0 +1,19 @@
+<div id="myConfirmModal<%=confirmEvent.id%>" class="modal hide fade" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Enter password to confirm event</h3>
+    </div>
+    <div class="modal-body">
+
+        <%= form_tag approve_contribution_path(current_user.getContribution(confirmEvent)), :method => :get do %>
+        <%= label_tag(:password, "Enter password to confirm") %>
+        <%= password_field_tag :password %>
+        </div>
+          <%= link_to "Forgot your password?", new_user_password_path%><br />
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <%= submit_tag "Confirm", class: "btn btn-success" %>
+
+        <% end %>
+    </div>
+</div>
