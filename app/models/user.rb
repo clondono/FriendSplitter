@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook, :venmo, :google_oauth2]
+         :recoverable, :rememberable, :trackable, :validatable, :timeoutable, :omniauthable, :omniauth_providers => [:facebook, :venmo, :google_oauth2]
 
   # Associate a user with a set of users that they owe
   has_many :debts, foreign_key: "owner_id", dependent: :destroy
@@ -22,6 +22,10 @@ class User < ActiveRecord::Base
 
   has_many :authentications, dependent: :destroy
 
+  #time out count
+  def timeout_in
+    15.minutes
+  end
   # Creates a contribution for the user for the given params.
   def setContribution!(event, amount, paid)
     contributions.create!(event_id: event.id, amount: amount, paid: paid)
