@@ -128,33 +128,17 @@ class User < ActiveRecord::Base
     return organizedEvents
   end
 
-  # Returns whether or not the user
-  # confirmed the event. Assumes the 
+
+  # Returns whether or not the user confirmed the event. Assumes the 
   # user has a contribution in the event.
   def confirmedEvent?(event)
-    contributions = event.contributions
-    myContribution = nil
-    contributions.each do |contribution|
-      if self == contribution.user
-        myContribution = contribution
-        break
-      end
-    end
-    return (not myContribution.isPending?)
+    return !Contribution.find_by(event_id: event.id, user_id: self.id).pending
   end
 
-  # Returns the user contribution in a 
-  # given event
+
+  # Returns the user contribution in a given event
   def getContribution(event)
-    contributions = event.contributions
-    myContribution = nil
-    contributions.each do |contribution|
-      if self == contribution.user
-        myContribution = contribution
-        break
-      end
-    end
-    return myContribution
+    return Contribution.find_by(event_id: event.id, user_id: self.id)
   end
 
 end

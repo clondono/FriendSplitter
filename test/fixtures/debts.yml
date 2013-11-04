@@ -1,3 +1,4 @@
+# Author: Lucy
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 #
 #
@@ -6,6 +7,11 @@ one:
     owner_id: 3
     indebted_id: 2 
     amount: 3.00
+
+two:
+    owner_id: 4
+    indebted_id: 2
+    amount: 4.00
 
 
 
