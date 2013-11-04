@@ -90,13 +90,20 @@ class User < ActiveRecord::Base
   end
 
   # Checks that all emails in the contribution attributes
-  # are belong to users.
+  # are belong to users and aren't repeated.
   def self.validEmails?(contributionAttributes)
     valid = true
+    emails = {}
     contributionAttributes.each do |contribution|
       contributor = User.find_by_email(contribution[1]["email"])
       if contributor.nil?
         valid = false
+        break
+      elsif emails[contributor]
+        valid = false
+        break
+      else
+        emails[contributor] = true
       end
     end
     return valid
