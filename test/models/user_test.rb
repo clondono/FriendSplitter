@@ -123,7 +123,7 @@ class UserTest < ActiveSupport::TestCase
 
     # getContribution should return the user Contribution object 
     # for a given event
-    test "getContribution returns Contribution or given event" do
+    test "getContribution returns Contribution for given event" do
         contributionFixture = contributions(:seven)
         user = users(:four)
         event = events(:two)
@@ -139,7 +139,6 @@ class UserTest < ActiveSupport::TestCase
         contribution = user.getContribution(event)
         assert_nil contribution, "contribution should be nil because no participation of user in event"
     end
-
 
 
 end

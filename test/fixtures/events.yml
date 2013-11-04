@@ -13,10 +13,14 @@ two:
 
 three:
     id: 3
-    creator_id: 2
     pending: true
 
 four:
     id: 4
-    creator_id: 1
     pending: false
+    amount: 4
+
+five:
+    id: 5
+    pending: false
+    amount: 6

@@ -44,3 +44,38 @@ seven:
     event_id: 2
     pending: true
     amount: 2
+
+event4_one:
+    user_id: 5
+    event_id: 4
+    amount: 2
+    paid: 4
+    pending: false
+
+event4_two:
+    user_id: 6
+    event_id: 4
+    amount: 2
+    paid: 0
+    pending: false
+
+event5_one:
+    user_id: 4
+    event_id: 5
+    amount: 2
+    paid: 0
+    pending: false
+
+event5_two:
+    user_id: 5
+    event_id: 5
+    amount: 2
+    paid: 3
+    pending: true
+
+event5_three:
+    user_id: 6
+    event_id: 5
+    amount: 2
+    paid: 3
+    pending: true
