@@ -79,3 +79,21 @@ event5_three:
     amount: 2
     paid: 3
     pending: true
+
+event6_one:
+    user_id: 4
+    event_id: 6
+    amount: 2
+    paid: 2
+
+event6_two:
+    user_id: 5
+    event_id: 6
+    amount: 2
+    paid: 2
+
+event6_three:
+    user_id: 6
+    event_id: 6
+    amount: 2
+    paid: 2

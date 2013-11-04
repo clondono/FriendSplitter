@@ -1,6 +1,34 @@
+# Author: Lucy
 require 'test_helper'
 
 class EventTest < ActiveSupport::TestCase
+
+    # Event should not save if there is no amount field
+    test "Validate amount presence" do
+        event = Event.new
+        event.title = "Title"
+        event.description = "Description"
+        assert !event.save, "Event should not save if there is no amount field"
+    end
+
+
+    # Event should not save if there is no title field
+    test "Validate title presence" do
+        event = Event.new
+        event.description = "Description"
+        event.amount = 3.00
+        assert !event.save, "Event should not save if there is no title field"
+    end
+    
+
+    # Event should not save if there is no description field
+    test "Validate description presence" do
+        event = Event.new
+        event.title = "title"
+        event.amount = 4
+        assert !event.save, "Event should not save if there is no description field"
+    end
+
 
     # isPending should return true for event with pending column true
     test "isPending returns true for pending event" do
@@ -87,6 +115,48 @@ class EventTest < ActiveSupport::TestCase
     end
 
 
+    # createContributions should create Contributions objects
+    # given a set of contribution attributes
+    test "createContributions creates Contribution objects" do
+        params = {"0"=>{"email"=>"one@one.com", "amount"=>"1.5", "paid"=>"2"}, "1"=>{"email"=>"two@two.com", "amount"=>"0.5", "paid"=>"0"}}
+        event = events(:six)
+
+        contribution1 = Contribution.find_by(event_id: 6, user_id: 1)
+        contribution2 = Contribution.find_by(event_id: 6, user_id: 2)
+
+        assert_nil contribution1, "contribution from user 1 and event 6 doesn't exist yet"
+        assert_nil contribution2, "contribution from user 2 and event 6 doesn't exist yet"
+
+        event.createContributions(params)
+
+        contribution1 = Contribution.find_by(event_id: 6, user_id: 1)
+        contribution2 = Contribution.find_by(event_id: 6, user_id: 2)
+
+        assert_not_nil contribution1, "contribution from user 1 and event 6 shoud exist after createContributions"
+        assert_not_nil contribution2, "contribution from user 2 and event 6 shoud exist after createContributions"
+    end
+
+
+    # createContributions should create Contributions objects with the proper values,
+    # given a set of contribution attributes
+    test "createContributions creates Contribution objects with correct values" do
+        params = {"0"=>{"email"=>"one@one.com", "amount"=>"1.5", "paid"=>"2"}, "1"=>{"email"=>"two@two.com", "amount"=>"0.5", "paid"=>"0"}}
+        event = events(:six)
+
+        event.createContributions(params)
+
+        contribution1 = Contribution.find_by(event_id: 6, user_id: 1)
+        contribution2 = Contribution.find_by(event_id: 6, user_id: 2)
+
+        assert_not_nil contribution1, "contribution from user 1 and event 6 shoud exist after createContributions"
+        assert_not_nil contribution2, "contribution from user 2 and event 6 shoud exist after createContributions"
+        assert contribution1.amount==1.50, "contribution from user 1 amount is $1.50"
+        assert contribution1.paid==2, "contribution from user 1 paid is $2"
+        assert contribution2.amount==0.50, "contribution from user 1 amount is $0.50"
+        assert contribution2.paid==0, "contribution from user 1 paid is $0"
+    end
+
+
     # Check that createDebts creates Debts such that each indebted User's debts
     # are increased by their deficit from the event...and conversely, that each
     # person who paid over their share is owed money that sum up to the surplus
@@ -124,5 +194,29 @@ class EventTest < ActiveSupport::TestCase
     end
 
 
+    # Check that createDebts creates no debts when everyone pays their share
+    test "createDebts should not create debts when all users pay share" do
+        event = events(:six)
+        user4 = users(:four)
+        user5 = users(:five)
+        user6 = users(:six)
+
+        event.createDebts
+
+        d1 = Debt.find_by(owner_id: 4, indebted_id: 5)
+        d2 = Debt.find_by(owner_id: 4, indebted_id: 6)
+        assert_nil d1, "debt should not exist between users 4 and 5"
+        assert_nil d2, "debt should not exist between users 4 and 6"
+
+        d1 = Debt.find_by(owner_id: 5, indebted_id: 4)
+        d2 = Debt.find_by(owner_id: 5, indebted_id: 6)
+        assert_nil d1, "debt should not exist between users 5 and 4"
+        assert_nil d2, "debt should not exist between users 5 and 6"
+
+        d1 = Debt.find_by(owner_id: 6, indebted_id: 4)
+        d2 = Debt.find_by(owner_id: 6, indebted_id: 5)
+        assert_nil d1, "debt should not exist between users 6 and 4"
+        assert_nil d2, "debt should not exist between users 6 and 5"
+    end
 
 end

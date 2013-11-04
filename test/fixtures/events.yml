@@ -24,3 +24,7 @@ five:
     id: 5
     pending: false
     amount: 6
+
+six:
+    id: 6
+    amount: 6
