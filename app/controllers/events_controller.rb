@@ -8,7 +8,11 @@
 # Primary author: Angel
 
 class EventsController < ApplicationController
-  before_filter :authorize_user
+  # Before every action, confirm that the user is signed in.
+  before_filter :check_user_signed_in
+  # Before show and destroy, check that the user is a 
+  # participant in the event.
+  before_filter :authorize_user, only: [:show, :destroy]
 
   def new
     @event = Event.new
@@ -44,7 +48,7 @@ class EventsController < ApplicationController
         # Create the event.
         @event = Event.new(event_params)
         # Save event and redirect appropriately.
-        if @event.save
+        if (@event.save and isNumber?(event_params[:amount]))
           # Create pending contributions.
           @event.createContributions(contributions)
 
@@ -52,7 +56,7 @@ class EventsController < ApplicationController
           redirect_to root_url
         else
           # Give error on invalid event inputs.
-          flash[:error] = "Please enter a title, description, and event amount."
+          flash[:error] = "Please enter a title, description, and an amount."
           redirect_to new_event_path(:amount => event_params[:amount], 
                              :title => event_params[:title], 
                              :description => event_params[:description],
@@ -98,10 +102,23 @@ class EventsController < ApplicationController
       params.require(:event).permit(contributions_attributes:[:email,:amount,:paid])
     end
 
+    # Checks that user is signed in.
+    def check_user_signed_in
+      if (not user_signed_in?)
+        flash[:error] = "Please sign in."
+        redirect_to root_url
+      end
+    end
+
+    # Checks that the user is allowed
+    # to perform the action.
     def authorize_user
-      unless user_signed_in?
-        # Do custom stuff, ultimately restricting access to the 
-        # ...protected resource if it needs to be
+      @event = Event.find_by_id(params[:id])
+      participantsIDs = @event.participant_ids
+
+      if (not participantsIDs.include?(Integer(current_user.id)))
+        flash[:error] = "You are not allowed to see that page."
+        redirect_to root_url
       end
     end
 
