@@ -64,7 +64,7 @@ Friendsplitter::Application.configure do
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found).
@@ -79,6 +79,20 @@ Friendsplitter::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  config.action_mailer.default_url_options = { :host => 'http://whispering-hamlet-9262.herokuapp.com' }
+  config.action_mailer.delivery_method = :smtp
+
+  config.action_mailer.smtp_settings = {
+    enable_starttls_auto: true,
+    address: 'smtp.gmail.com',
+    port: 587,
+    authentication: 'plain',
+    user_name: 'friendsplitter@gmail.com',
+    password: 'splitfriends',
+    enable_starttls_auto: true
+  }
+
+  config.action_mailer.perform_deliveries = true
+
+  config.action_mailer.default_url_options = { :host => 'https://agile-eyrie-1690.herokuapp.com/' }
 
 end
