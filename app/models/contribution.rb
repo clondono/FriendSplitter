@@ -13,7 +13,7 @@ class Contribution < ActiveRecord::Base
   # Note: As a hack to allow contributions to be created
   #       at the same time as an event is, the following
   #       validations were removed. Might try to
-  #       implement them later -Angel
+  #       implement them later, but they aren't needed - Angel
   # validates :user_id, presence: true
   # validates :event_id, presence: true
   # validates :amount, presence: true
@@ -29,4 +29,12 @@ class Contribution < ActiveRecord::Base
     self.pending = false
     self.save
   end
+
+  # Declines a contribution
+  def decline!
+    event = self.event
+    self.destroy
+    event.destroy
+  end
+
 end

@@ -85,13 +85,6 @@ class EventsController < ApplicationController
         @contributions = @event.contributions      
     end
 
-    #  def destroy
-    #    @event = Event.find_by_id(params[:id])
-    #    @event.destroy
-    #    flash[:success] = "Thanks. That event has been deleted."
-    #    redirect_to root_url
-    #  end
-
     private
     # Strong parameters for security (rails way)
     def event_params
@@ -111,7 +104,8 @@ class EventsController < ApplicationController
     end
 
     # Checks that the user is allowed
-    # to perform the action.
+    # to perform the action (i.e. user is a participant
+    # in the event).
     def authorize_user
         @event = Event.find_by_id(params[:id])
 

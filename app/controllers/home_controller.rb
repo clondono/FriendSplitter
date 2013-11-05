@@ -6,7 +6,10 @@
 class HomeController < ApplicationController
 
   def index
-    #Get user info if signed in
+    # Get user info if signed in
+    # Note: strong params not needed, since
+    #       this simply displays a signed in
+    #       user's info.
     if user_signed_in?
       allEvents = current_user.getEvents
       @events = allEvents["confirmed"]

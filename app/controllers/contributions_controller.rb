@@ -32,16 +32,13 @@ class ContributionsController < ApplicationController
     else
         flash[:error] = "Incorrect Password"
         redirect_to root_url 
-
     end
   end
 
   def decline
     # Delete the contribution/event
     contribution = Contribution.find(params[:id])
-    event = contribution.event
-    contribution.destroy
-    event.destroy
+    contribution.decline!
 
     respond_to do |format|
         format.html { 

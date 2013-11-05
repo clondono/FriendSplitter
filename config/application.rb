@@ -21,6 +21,6 @@ module Friendsplitter
     # config.i18n.default_locale = :de
 
     config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
-    config.force_ssl = true
+    config.force_ssl = true 
   end
 end
