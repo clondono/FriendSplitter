@@ -1,6 +1,7 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  
+  #method that handles call backs from API callbacks from signing in/up through facebook
   def facebook
-    # You need to implement the method below in your model (e.g. app/models/user.rb)
     @user = User.find_for_facebook_oauth(request.env["omniauth.auth"], current_user)
     if @user.persisted?
       sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated
@@ -10,6 +11,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       redirect_to new_user_registration_url
     end
   end
+
+  #method that handles call backs from API callbacks from signing in/up through venmo
 
   def venmo
     # You need to implement the method below in your model (e.g. app/models/user.rb)
@@ -24,6 +27,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
+  #method that handles call backs from API callbacks from signing in/up through google
 def google_oauth2
       # You need to implement the method below in your model (e.g. app/models/user.rb)
       @user = User.find_for_google_oauth2(request.env["omniauth.auth"], current_user)

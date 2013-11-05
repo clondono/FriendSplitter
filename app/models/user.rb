@@ -37,6 +37,7 @@ class User < ActiveRecord::Base
     debts.find_by(indebted_id: otherUser.id)
   end
 
+  #method handles responses from API for faceboook and creates users or authentications if necessary
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     user = User.where(:email => auth.info.email).first
     unless user
@@ -56,8 +57,7 @@ class User < ActiveRecord::Base
 
   end
 
- # credentials=<OmniAuth::AuthHash expires=false token="EnfdcCVbZn9fhD36mPgtLQEB7qEWEUMT"> extra=OmniAuth::AuthHash raw_info=<OmniAuth::AuthHash balance=0.0 email="christianlondono91@gmail.com" firstname="Christian" id="664762" lastname="Londono" name="Christian Londono" phone="12108528063" picture="https://s3.amazonaws.com/venmo/no-image.gif" username="christian-londono">> info=#<OmniAuth::AuthHash::InfoHash balance=0.0 email="christianlondono91@gmail.com" image="https://s3.amazonaws.com/venmo/no-image.gif" name="Christian Londono" phone="12108528063" urls=#<OmniAuth::AuthHash profile="https://venmo.com/christian-londono"> username="christian-londono"> provider="venmo" uid="664762">
-
+  #method handles responses from API for venmo and creates users or authentications if necessary
   def self.find_for_venmo_oauth(auth, signed_in_resource=nil)
     user = User.where(:email => auth.info.email).first
 
@@ -78,6 +78,7 @@ class User < ActiveRecord::Base
     user
   end
 
+  #method handles responses from API for google and creates users or authentications if necessary
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
       data = access_token.info
       user = User.where(:email => data["email"]).first
