@@ -108,33 +108,18 @@ class Event < ActiveRecord::Base
         end
     end  
 
-    # TODO: This is repetitive...Should be combined with createContribution 
-    #       when implemented -Comment by: Angel
-    def createEvenContributions(eventContributions)
-        @count = self.contributions.length
-        @evenSplit = self.amount/@count
-
-        eventContributions.each do |contParams|
-            contParams[:amount]=@evenSplit
-            contributor= User.find_by_email(contParams[:email])
-            contributor.setContribution!(self, contParams[:amount], contParams[:paid])
-        end
-    end
-
 
     # Checks that a set of contributions adds up
     # to the total amount of a event cost.
-    # The total amout owed should equal the total 
+    # The total amount owed should equal the total 
     # amount paid which should equal the event cost.
     def self.validContributions?(contributionsInfo,amount)
         totalAmountOwed = 0
         totalAmountPaid = 0
         contributionsInfo.each do |contribution|
-            logger.debug "contributionV: #{contribution}"
             totalAmountOwed += BigDecimal(contribution[1]["amount"])
             totalAmountPaid += BigDecimal(contribution[1]["paid"])
         end
-        logger.debug "totalAmountOwed: #{totalAmountOwed}"
         return (totalAmountOwed == totalAmountPaid and totalAmountPaid == BigDecimal(amount))
     end
 
@@ -152,8 +137,9 @@ class Event < ActiveRecord::Base
         return true
     end
 
-    # Checks if all of the event's contributions
-    # were confirmed.
+    # Call after all event's contributions are confirmed:
+    # sets event's pending field to false and creates debts
+    # from the Event
     def confirm!
         self.pending = false
         self.save

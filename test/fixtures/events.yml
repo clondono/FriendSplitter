@@ -1,7 +1,30 @@
+# Author: Lucy
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  creator_id: 1
+    id: 1
+    creator_id: 2
+    pending: true
 
 two:
-  creator_id: 1
+    id: 2
+    creator_id: 3
+    pending: false
+
+three:
+    id: 3
+    pending: true
+
+four:
+    id: 4
+    pending: false
+    amount: 4
+
+five:
+    id: 5
+    pending: false
+    amount: 6
+
+six:
+    id: 6
+    amount: 6

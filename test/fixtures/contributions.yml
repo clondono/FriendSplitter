@@ -1,7 +1,99 @@
+# Author: Lucy
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  user_id: 1
+    user_id: 2
+    event_id: 1
+    pending: true
+    amount: 4.00
 
 two:
-  user_id: 1
+    user_id: 2
+    event_id: 2
+    pending: false
+    amount: 3.00
+
+
+three:
+    user_id: 1
+    event_id: 1
+    pending: false
+    amount: 2
+
+four:
+    user_id: 1
+    event_id: 2
+    pending: false
+    amount: 2
+
+five:
+    user_id: 1
+    event_id: 3
+    pending: false
+    amount: 3
+
+six:
+    user_id: 4
+    event_id: 1
+    pending: false
+    amount: 2
+
+seven:
+    id: 7
+    user_id: 4
+    event_id: 2
+    pending: true
+    amount: 2
+
+event4_one:
+    user_id: 5
+    event_id: 4
+    amount: 2
+    paid: 4
+    pending: false
+
+event4_two:
+    user_id: 6
+    event_id: 4
+    amount: 2
+    paid: 0
+    pending: false
+
+event5_one:
+    user_id: 4
+    event_id: 5
+    amount: 2
+    paid: 0
+    pending: false
+
+event5_two:
+    user_id: 5
+    event_id: 5
+    amount: 2
+    paid: 3
+    pending: true
+
+event5_three:
+    user_id: 6
+    event_id: 5
+    amount: 2
+    paid: 3
+    pending: true
+
+event6_one:
+    user_id: 4
+    event_id: 6
+    amount: 2
+    paid: 2
+
+event6_two:
+    user_id: 5
+    event_id: 6
+    amount: 2
+    paid: 2
+
+event6_three:
+    user_id: 6
+    event_id: 6
+    amount: 2
+    paid: 2
