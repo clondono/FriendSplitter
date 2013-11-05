@@ -108,19 +108,6 @@ class Event < ActiveRecord::Base
         end
     end  
 
-    # TODO: This is repetitive...Should be combined with createContribution 
-    #       when implemented -Comment by: Angel
-    def createEvenContributions(eventContributions)
-        @count = self.contributions.length
-        @evenSplit = self.amount/@count
-
-        eventContributions.each do |contParams|
-            contParams[:amount]=@evenSplit
-            contributor= User.find_by_email(contParams[:email])
-            contributor.setContribution!(self, contParams[:amount], contParams[:paid])
-        end
-    end
-
 
     # Checks that a set of contributions adds up
     # to the total amount of a event cost.

@@ -6,6 +6,9 @@
 # NOTE/TODO: Isn't this redundant? Can't we just call 
 #            existing methods in the debt model?
 
+require 'bigdecimal'
+require 'bigdecimal/util'
+
 class DebtsController < ApplicationController
   # Before every action, confirm that the user is signed in.
   before_filter :check_user_signed_in
@@ -17,7 +20,7 @@ class DebtsController < ApplicationController
   def update
 
     debt = Debt.find_by_id(params[:id])
-    payment = params[:debt][:amount].to_i
+    payment = BigDecimal( debt_params[:amount] )
 
     # Since the debted user is paying the indebted user,
     # we can simulate this as the indebted user "owing"
@@ -29,6 +32,11 @@ class DebtsController < ApplicationController
   end
 
 private
+    # Whitelist strong params 
+    def debt_params
+      params.require(:debt).permit(:amount)
+    end
+
     # Checks that user is signed in.
     def check_user_signed_in
       if (not user_signed_in?)

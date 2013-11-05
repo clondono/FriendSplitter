@@ -9,15 +9,18 @@ Friendsplitter::Application.routes.draw do
 
   root 'home#index'
 
-  resources :debts
+  resources :debts, only: [:update]
   resources :contributions do
     member do
       get :approve
       get :decline
     end
   end
-  resources :events
+  resources :events, only: [:new, :create, :show]
 
   put 'debts/pay' => 'debts#pay'
+
+  #redirect all non-recognized paths to root
+  match '*path', to: redirect('/'), via: 'get'
 
 end
