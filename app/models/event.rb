@@ -3,7 +3,6 @@
 # Associates an event with many contributions.
 
 # @author Angel/Christian
-#
 
 require 'bigdecimal'
 require 'bigdecimal/util'
@@ -27,7 +26,7 @@ class Event < ActiveRecord::Base
 
     # Creates the debts associated with an event where
     # the bill is divided evenly amongst all participants.
-    # TODO: Find an optimal pairing between positive 
+    # Goal: Find an optimal pairing between positive 
     # and negative contributions such that the number of
     # pairings are minimized. 
     def createDebts
@@ -56,9 +55,10 @@ class Event < ActiveRecord::Base
             end
         end
 
+        # IMPLEMENT OPTIMIZATION:
         # Now, if debts stll remain, use a greedy approach to 
         # settle the remainder of debts. Match the users who 
-        # owe the most with those who are owed the least.
+        # owe the most with those who are owed the least.  O(n log n)
 
         # debtedUsers.sort{|x,y| x[0] <=> y[0]}.reverse!
         # owedUsers.sort{|x,y| x[0] <=> y[0]}
@@ -107,7 +107,6 @@ class Event < ActiveRecord::Base
             contributor.setContribution!(self, contribution[1]["amount"], contribution[1]["paid"])
         end
     end  
-
 
     # Checks that a set of contributions adds up
     # to the total amount of a event cost.

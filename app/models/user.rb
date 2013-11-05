@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
 
   has_many :authentications, dependent: :destroy
 
-  #time out count
+  # Sets the time out for inactive users to 15 minutes.
   def timeout_in
     15.minutes
   end
